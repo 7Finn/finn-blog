@@ -1,8 +1,207 @@
+/*
+  微信：#7cd33b
+  微博：#e6162d
+*/
+
 body {
-  padding: 50px;
+  margin: 0;
+  padding: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #eaeaea;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 a {
   color: #00B7FF;
+  text-decoration: none;
+}
+
+.grid-container {
+  width: 100%;
+  max-width: 1200px;
+  /*
+    box-sizing 属性允许以特定的方式定义匹配某个区域的特定元素。
+    例如，假如需要并排放置两个带边框的框
+    可通过将 box-sizing 设置为 "border-box"
+  */
+  box-sizing: border-box;
+}
+
+.row:before, .row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[class*='col-md'] {
+  float: left;
+  width: 8%;
+}
+
+.row .box {
+  margin:9px;
+  background: #eee;
+  border: 1px solid #999;
+  height: 48px;
+}
+
+.col-md-1 { width: 8.3%; }
+.col-md-2 { width: 16.6%; }
+.col-md-3 { width: 25%; }
+.col-md-4 { width: 33.3%; }
+.col-md-5 { width: 41.6%; }
+.col-md-6 { width: 50%; }
+.col-md-7 { width: 58.3%; }
+.col-md-8 { width: 66.6%; }
+.col-md-9 { width: 75%; }
+.col-md-10 { width: 83.3%; }
+.col-md-11 { width: 91.6%; }
+.col-md-12 { width: 100%; }
+
+
+@media all and (max-width: 768px) {
+  .col-sm-1 { width: 8.3%; }
+  .col-sm-2 { width: 16.6%; }
+  .col-sm-3 { width: 25%; }
+  .col-sm-4 { width: 33.3%; }
+  .col-sm-5 { width: 41.6%; }
+  .col-sm-6 { width: 50%; }
+  .col-sm-7 { width: 58.3%; }
+  .col-sm-8 { width: 66.6%; }
+  .col-sm-9 { width: 75%; }
+  .col-sm-10 { width: 83.3%; }
+  .col-sm-11 { width: 91.6%; }
+  .col-sm-12 { width: 100%; }
+}
+
+/* 导航栏 */
+
+.nav {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 1px 1px 1px #ddd;
+  height: 70px;
+  padding: 0 10%;
+  margin-bottom: 40px;
+}
+
+.brand {
+  font-size: 24px;
+  float: left;
+  width: 50px;
+  height: inherit;
+  line-height: 70px;
+  display: inline-block;
+  vertical-align: middle
+}
+
+.nav-right {
+  float: right;
+  height: inherit;
+}
+
+.nav-item {
+  line-height: 70px;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+/* 主体 */
+
+.container {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 文章 */
+.article-list {
+  margin-right: 220px;
+}
+
+.article {
+  border-radius: 2px;
+  background-color: #f9f9f9;
+  box-shadow: 1px 1px 1px #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.article hr {
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.article .article-date {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+
+/* 右边信息栏 */
+.right {
+  float: right;
+  width: 180px;
+}
+
+.right-div {
+  border-radius: 2px;
+  background-color: #f9f9f9;
+  box-shadow: 1px 1px 1px #ddd;
+  padding: 10px;
+}
+
+/* 个人信息框 */
+
+.self-information {
+  margin-bottom: 20px;
+}
+
+.self-information .avatar {
+  border-radius: 2px;
+  width: 160px;
+  margin-bottom: 20px;
+}
+
+.self-information .contact-list {
+  margin-left: 10px;
+}
+
+.self-information .contact-list img[src *= '.svg'] {
+  width: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.self-information .contact-list a {
+  color: #000;
+}
+
+.self-information .contact-list .weibo-link {
+  color: #e6162d;
+}
+
+
+/* Tag栏 */
+
+.tag-list {
+  margin-bottom: 20px;
+}
+
+/* 搜索框 */
+
+.search-bar {
+
+}
+
+.search-bar input {
+  border: none;
+  width: 100%;
 }
