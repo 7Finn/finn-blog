@@ -1,12 +1,12 @@
 <template>
-    <Login></Login>
+    <Login id="login"></Login>
 </template>
 
 <script>
-import Login from '../components/login.vue'
+import Login from '../components/login'
 
 export default {
-  date() {
+  data: function() {
     return {
 
     }
@@ -18,4 +18,7 @@ export default {
 </script>
 
 <style>
+#login {
+  margin-top: 10%;
+}
 </style>

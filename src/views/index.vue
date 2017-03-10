@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import FinnArticle from '../components/article.vue'
-import Information from '../components/information.vue'
-import TagList from '../components/tagList.vue'
+import FinnArticle from '../components/article'
+import Information from '../components/information'
+import TagList from '../components/tagList'
 
 export default {
-  date() {
+  data: function() {
     return {
 
     }

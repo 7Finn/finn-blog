@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import Puzzle from '../components/puzzle.vue'
+import Puzzle from '../components/puzzle'
 export default {
-  date() {
+  date: function() {
     return {
 
     }

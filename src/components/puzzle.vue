@@ -313,7 +313,7 @@ function recover() {
 
 </script>
 
-<style>
+<style >
 
 #puzzle {
   text-align: center;
@@ -334,7 +334,7 @@ function recover() {
   user-select: none;
 }
 
-.info-div {
+#puzzle .info-div {
   font-family: 'Century Gothic', serif;
   font-size: 20px;
   width: 200px;
@@ -346,7 +346,7 @@ function recover() {
 
 
 
-.button-group-div {
+#puzzle .button-group-div {
   position: relative;
   width: 400px;
   margin-top: 30px;
@@ -354,7 +354,7 @@ function recover() {
   margin-right: auto;
 }
 
-#game-div {
+#puzzle #game-div {
   position: relative;
   margin-top: 30px;
   margin-left: auto;
@@ -368,11 +368,11 @@ function recover() {
   box-shadow:inset 0 0 5px #888;
 }
 
-#time-div {
+#puzzle #time-div {
   margin-right: 10px;
 }
 
-.button {
+#puzzle .button {
   cursor: pointer;
   color: #fff;
   width: 100px;
@@ -386,17 +386,17 @@ function recover() {
   text-decoration: none;
 }
 
-.button:active {
+#puzzle .button:active {
   margin-top: 1px;
   margin-bottom: 1px;
   border-bottom: 0;
 }
 
-#start {
+#puzzle #start {
   position: absolute;
   left: 5%;
 }
-.red-button {
+#puzzle .red-button {
   background-color: #E24A1F;
   border-bottom: 1px solid #AF3B2F;
   -moz-box-shadow: 0.5px 0.5px 0.5px 0.5px #B94949;
@@ -404,15 +404,16 @@ function recover() {
   box-shadow: 0.5px 0.5px 0.5px 0.5px #B94949;
 }
 
-#change {
+#puzzle #change {
   position: absolute;
   left: 0;
   right: 0;
+  width: 100px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.blue-button {
+#puzzle .blue-button {
   width: auto;
   background-color: #1BB2C7;
   border-bottom: 1px solid #118292;
@@ -421,12 +422,12 @@ function recover() {
   box-shadow: 0.5px 0.5px 0.5px 0.5px #3799A7;
 }
 
-#difficulty {
+#puzzle #difficulty {
   position: absolute;
   right: 5%;
 }
 
-.green-button {
+#puzzle .green-button {
   background-color: #01AD44;
   border-bottom: 1px solid #198241;
   -moz-box-shadow: 0.5px 0.5px 0.5px 0.5px #1D8E49;
@@ -434,7 +435,7 @@ function recover() {
   box-shadow: 0.5px 0.5px 0.5px 0.5px #1D8E49;
 }
 
-.gray-button {
+#puzzle .gray-button {
   background-color: #B5B5B5;
   border-bottom: 1px solid #A5A5A5;
   -moz-box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;
@@ -442,11 +443,11 @@ function recover() {
   box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;
 }
 
-#recover {
+#puzzle #recover {
   margin-top: 50px;
 }
 
-.pic {
+#puzzle .pic {
   position: absolute;
   margin: 1.1px;
   width: 97.8px;
@@ -462,42 +463,42 @@ function recover() {
   transition: all 0.3s;
 }
 
-.pic:hover {
+#puzzle .pic:hover {
   -moz-transform: scale(1.05,1.05);
   -webkit-transform: scale(1.05,1.05);
   transform: scale(1.05,1.05);
   z-index: 10;
 }
-.b1 {background-image: url(../assets/img/1.jpg);}
-.b2 {background-image: url(../assets/img/2.jpg);}
-.b3 {background-image: url(../assets/img/3.jpg);}
-.b4 {background-image: url(../assets/img/4.jpg);}
+#puzzle .b1 {background-image: url(../assets/img/1.jpg);}
+#puzzle .b2 {background-image: url(../assets/img/2.jpg);}
+#puzzle .b3 {background-image: url(../assets/img/3.jpg);}
+#puzzle .b4 {background-image: url(../assets/img/4.jpg);}
 
 
 
-.row-1 {top: 0;}
-.row-2 {top: 100px;}
-.row-3 {top: 200px;}
-.row-4 {top: 300px;}
-.col-1 {left: 0;}
-.col-2 {left: 100px;}
-.col-3 {left: 200px;}
-.col-4 {left: 300px;}
-#pic1-1 {background-position: 0 0;}
-#pic1-2 {background-position: 33.3% 0;}
-#pic1-3 {background-position: 66.6% 0;}
-#pic1-4 {background-position: 100% 0;}
-#pic2-1 {background-position: 0 33.3%;}
-#pic2-2 {background-position: 33.3% 33.3%;}
-#pic2-3 {background-position: 66.6% 33.3%;}
-#pic2-4 {background-position: 100% 33.3%;}
-#pic3-1 {background-position: 0 66.6%;}
-#pic3-2 {background-position: 33.3% 66.6%;}
-#pic3-3 {background-position: 66.6% 66.6%;}
-#pic3-4 {background-position: 100% 66.6%;}
-#pic4-1 {background-position: 0 100%;}
-#pic4-2 {background-position: 33.3% 100%;}
-#pic4-3 {background-position: 66.6% 100%;}
-#pic4-4 {display: none;}
+#puzzle .row-1 {top: 0;}
+#puzzle .row-2 {top: 100px;}
+#puzzle .row-3 {top: 200px;}
+#puzzle .row-4 {top: 300px;}
+#puzzle .col-1 {left: 0;}
+#puzzle .col-2 {left: 100px;}
+#puzzle .col-3 {left: 200px;}
+#puzzle .col-4 {left: 300px;}
+#puzzle #pic1-1 {background-position: 0 0;}
+#puzzle #pic1-2 {background-position: 33.3% 0;}
+#puzzle #pic1-3 {background-position: 66.6% 0;}
+#puzzle #pic1-4 {background-position: 100% 0;}
+#puzzle #pic2-1 {background-position: 0 33.3%;}
+#puzzle #pic2-2 {background-position: 33.3% 33.3%;}
+#puzzle #pic2-3 {background-position: 66.6% 33.3%;}
+#puzzle #pic2-4 {background-position: 100% 33.3%;}
+#puzzle #pic3-1 {background-position: 0 66.6%;}
+#puzzle #pic3-2 {background-position: 33.3% 66.6%;}
+#puzzle #pic3-3 {background-position: 66.6% 66.6%;}
+#puzzle #pic3-4 {background-position: 100% 66.6%;}
+#puzzle #pic4-1 {background-position: 0 100%;}
+#puzzle #pic4-2 {background-position: 33.3% 100%;}
+#puzzle #pic4-3 {background-position: 66.6% 100%;}
+#puzzle #pic4-4 {display: none;}
 
 </style>

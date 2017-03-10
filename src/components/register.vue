@@ -1,22 +1,26 @@
 <template>
-  <div id="login">
-    <h1>用户登录</h1>
-    <form method="post">
+  <div id="register">
+    <h1>注册账号</h1>
+    <form @submit.prevent="submit">
       <div class="input-div" v-bind:class="userDivClass">
         <span class="span" v-bind:class="userSpanClass">用户名</span>
-        <input name="username" type="text" class="input" @focus="userfs" @blur="userbr" v-model="username"/>
+        <input name="username" type="text" class="input" @focus="userfs" @blur="userbr" v-model="formData.username"/>
       </div>
       <p class="warning" > {{ usernameWarning }} </p>
       <div class="input-div" v-bind:class="passDivClass">
         <span class="span" v-bind:class="passSpanClass">密码</span>
-        <input name="password" type="password" class="input" @focus='passfs' @blur="passbr" v-model="password"/>
+        <input name="password" type="password" class="input" @focus='passfs' @blur="passbr" v-model="formData.password"/>
       </div>
       <p class="warning" > {{ passwordWarning }} </p>
-      <span class="warning"></span>
-      <button type="submit" id="post" class="button">登录</button>
+      <div class="input-div" v-bind:class="repassDivClass">
+        <span class="span" v-bind:class="repassSpanClass">重复密码</span>
+        <input name="repassword" type="password" class="input" @focus='repassfs' @blur="repassbr" v-model="formData.repassword"/>
+      </div>
+      <p class="warning" > {{ repasswordWarning }} </p>
+      <button id="post" class="button" type="submit">注册</button>
     </form>
-    <span class="switch-to-signup">没有账号?点击
-      <router-link to='/register'>注册</router-link>
+    <span class="switch-to-login">已有账号?点击
+      <router-link to='/login'>登录</router-link>
     </span>
   </div>
 </template>
@@ -28,37 +32,61 @@ module.exports = {
     return {
       usernameActive: false,
       passwordActive: false,
-      usernameWarning: false,
-      passwordWarning: false,
-      username: null,
-      password: null,
+      repasswordActive: false,
+      usernameWarning: '',
+      passwordWarning: '',
+      repasswordWarning: '',
+      formData: {
+        username: null,
+        password: null,
+        repassword: null,
+      }
     }
   },
   computed: {
     userDivClass: function () {
       return {
         'blue-div': this.usernameActive,
-        'used-div': !this.usernameActive && this.username
+        'used-div': !this.usernameActive && this.formData.username,
+        'red-div': this.usernameWarning != ''
       }
     },
     passDivClass: function() {
       return {
         'blue-div': this.passwordActive,
-        'used-div': !this.passwordActive && this.password
+        'used-div': !this.passwordActive && this.formData.password,
+        'red-div': this.passwordWarning != ''
+      }
+    },
+    repassDivClass: function() {
+      return {
+        'blue-div': this.repasswordActive,
+        'used-div': !this.repasswordActive && this.formData.repassword,
+        'red-div': this.repasswordWarning != ''
       }
     },
     userSpanClass: function() {
       return {
         'init-position' : !this.usernameActive,
         'up-position' : this.usernameActive,
-        'used-span' : !this.usernameActive && this.username
+        'used-span' : !this.usernameActive && this.formData.username,
+        'warning-span': this.usernameWarning != ''
       }
     },
     passSpanClass: function() {
       return {
         'init-position' : !this.passwordActive,
         'up-position' : this.passwordActive,
-        'used-span' : !this.passwordActive && this.password
+        'used-span' : !this.passwordActive && this.formData.password,
+        'warning-span': this.passwordWarning != ''
+      }
+    },
+    repassSpanClass: function() {
+      return {
+        'init-position' : !this.repasswordActive,
+        'up-position' : this.repasswordActive,
+        'used-span' : !this.repasswordActive && this.formData.repassword,
+        'warning-span': this.repasswordWarning != ''
       }
     }
   },
@@ -70,12 +98,31 @@ module.exports = {
     passfs: function(event) {
       this.passwordActive = true;
     },
-    // 用户名框焦点移除
+    repassfs: function(event) {
+      this.repasswordActive = true;
+    },
+    // 焦点移除
     userbr: function(event) {
       this.usernameActive =  false;
     },
     passbr: function(event) {
       this.passwordActive =  false;
+    },
+    repassbr: function(event) {
+      this.repasswordActive = false;
+      if (this.formData.password && this.formData.password !== this.formData.repassword) {
+        this.repasswordWarning = "两次密码不一致X";
+      } else {
+        this.repasswordWarning = "";
+      }
+    },
+    submit: function() {
+      var data = JSON.stringify(this.formData); // 这里才是你的表单数据
+      this.$http.post('/api/register', data).then((response) => {
+          console.log("注册成功");
+      }, (response) => {
+          console.log("注册失败");
+      });
     }
   }
 
@@ -90,13 +137,12 @@ h1 {
 	margin-bottom: 30px;
 }
 
-#login {
+#register {
   position: relative;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  height: 300px;
 	width: 240px;
 	background-color: #f9f9f9;
 	border-radius: 2px;
@@ -109,7 +155,7 @@ h1 {
 }
 
 
-.switch-to-signup {
+.switch-to-login {
 	color: #444;
 	position: absolute;
 	font-size: 14px;
@@ -125,7 +171,6 @@ h1 {
 	border-radius: 2px;
 	width: 230px;
 	height: 40px;
-	margin-bottom: 30px;
 }
 
 .span {
@@ -186,11 +231,11 @@ h1 {
 
 
 .warning {
+  text-align: right;
+  margin: 5px 0;
+  height: 20px;
 	font-size: 15px;
 	color: #E24A1F;
-  position: absolute;
-  right: 10px;
-  top: 40px;
 }
 
 .button {
@@ -208,26 +253,15 @@ h1 {
 	text-align: center;
 	text-decoration: none;
 	/*font-family: SYHT, "Microsoft Yahei", "微软雅黑", Arial, Helvetica, sans-serif;*/
+  margin-bottom: 30px;
 }
 
 .button:active {
-	margin-top: 1px;
-	margin-bottom: 1px;
-	border-bottom: 0;
+	background-color: #118494;
 }
 
 #post {
  	background-color: #1BB2C7;
-}
-
-#reset {
-	float: left;
-	margin-left: 70px;
-	background-color: #B5B5B5;
-	border-bottom: 1px solid #A5A5A5;
-/*  	-moz-box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;
-  	-webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;
-  	box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;*/
 }
 
 </style>

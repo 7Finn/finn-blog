@@ -1,7 +1,7 @@
 <template>
   <div class="self-information">
     <img class="avatar" src="../assets/img/avatar.jpg" alt="头像">
-    <ul class="contact-list">
+    <!-- <ul class="contact-list">
       <li>
         <a class="weibo-link" href="http://weibo.com/u/2082859582/" target='_blank'>
           <img src="../assets/img/weibo.svg" alt="weibo">@57Finn</a>
@@ -9,7 +9,7 @@
       <li>
         <a><img src="../assets/img/wechat.svg" alt="wechat">q879788904</a>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -27,7 +27,6 @@
 .self-information .avatar {
   border-radius: 2px;
   width: 160px;
-  margin-bottom: 20px;
 }
 
 .self-information .contact-list {
