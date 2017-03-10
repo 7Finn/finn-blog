@@ -4,29 +4,26 @@ var router = express.Router();
 module.exports = function(db) {
   var userModel = require('../models/usersModel')(db);
 
-  router.get('/', function(req, res) {
+  router.get('/user', function(req, res) {
     if (req.session.user) {
         res.json({
             username : req.session.user.username
         })
     } else {
         res.json({
-            username : ''
+            username : null
         })
     }
   });
 
   router.post('/login', function(req, res, next) {
     userModel.findUser(req.body.username, req.body.password)
-      .then(function(data) {
+      .then(data => {
         req.session.user = data.user;
-        console.log("登录成功: ");
-        console.log(data.user);
-        res.json(data.user);
+        res.json(data);
       })
-      .catch(function(data) {
-        console.log("登录出错:" + data.error);
-        res.json(false);
+      .catch(data => {
+        res.json(data);
       })
   });
 
@@ -42,9 +39,8 @@ module.exports = function(db) {
   });
 
   router.get('/logout', function(req, res, next) {
-    console.log("/logout");
     delete req.session.user;
-    res.redirect('/login');
+    res.json(true);
   });
 
   return router;

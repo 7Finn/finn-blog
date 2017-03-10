@@ -27,7 +27,7 @@
 
 <script>
 
-module.exports = {
+export default {
   data: function() {
     return {
       usernameActive: false,
@@ -118,9 +118,9 @@ module.exports = {
     },
     submit: function() {
       var data = JSON.stringify(this.formData); // 这里才是你的表单数据
-      this.$http.post('/api/register', data).then((response) => {
+      this.$http.post('/api/register', data).then(res => {
           console.log("注册成功");
-      }, (response) => {
+      }, res => {
           console.log("注册失败");
       });
     }

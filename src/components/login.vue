@@ -1,18 +1,17 @@
 <template>
   <div id="login">
     <h1>用户登录</h1>
-    <form method="post">
+    <form @submit.prevent="submit">
       <div class="input-div" v-bind:class="userDivClass">
         <span class="span" v-bind:class="userSpanClass">用户名</span>
-        <input name="username" type="text" class="input" @focus="userfs" @blur="userbr" v-model="username"/>
+        <input type="text" class="input" @focus="userfs" @blur="userbr" v-model="formData.username"/>
       </div>
       <p class="warning" > {{ usernameWarning }} </p>
       <div class="input-div" v-bind:class="passDivClass">
         <span class="span" v-bind:class="passSpanClass">密码</span>
-        <input name="password" type="password" class="input" @focus='passfs' @blur="passbr" v-model="password"/>
+        <input type="password" class="input" @focus='passfs' @blur="passbr" v-model="formData.password"/>
       </div>
       <p class="warning" > {{ passwordWarning }} </p>
-      <span class="warning"></span>
       <button type="submit" id="post" class="button">登录</button>
     </form>
     <span class="switch-to-signup">没有账号?点击
@@ -22,53 +21,85 @@
 </template>
 
 <script>
-
-module.exports = {
+export default {
   data: function() {
     return {
       usernameActive: false,
       passwordActive: false,
-      usernameWarning: false,
-      passwordWarning: false,
-      username: null,
-      password: null,
+      usernameWarning: '',
+      passwordWarning: '',
+      formData: {
+        username: null,
+        password: null,
+      }
     }
   },
   computed: {
     userDivClass: function () {
       return {
         'blue-div': this.usernameActive,
-        'used-div': !this.usernameActive && this.username
+        'used-div': !this.usernameActive && this.formData.username,
+        'red-div': this.usernameWarning != ''
       }
     },
     passDivClass: function() {
       return {
         'blue-div': this.passwordActive,
-        'used-div': !this.passwordActive && this.password
+        'used-div': !this.passwordActive && this.formData.password,
+        'red-div': this.passwordWarning != ''
       }
     },
     userSpanClass: function() {
       return {
         'init-position' : !this.usernameActive,
         'up-position' : this.usernameActive,
-        'used-span' : !this.usernameActive && this.username
+        'used-span' : !this.usernameActive && this.formData.username,
+        'warning-span': this.usernameWarning != ''
       }
     },
     passSpanClass: function() {
       return {
         'init-position' : !this.passwordActive,
         'up-position' : this.passwordActive,
-        'used-span' : !this.passwordActive && this.password
+        'used-span' : !this.passwordActive && this.formData.password,
+        'warning-span': this.passwordWarning != ''
       }
     }
   },
   methods: {
+    submit: function() {
+      var data = JSON.stringify(this.formData);
+      // 检查是否为空
+      if (!this.formData.username) {
+        this.usernameWarning = "用户名不可为空 ×";
+        return;
+      }
+      if (!this.formData.password) {
+        this.passwordWarning = "密码不可为空 ×";
+        return;
+      }
+
+      this.$http.post('/api/login', data)
+        .then(res => {  // success
+          if(res.body.user) {
+            this.$router.push('/');
+          } else {
+            if (res.body.error == "用户不存在") {
+              this.usernameWarning = res.body.error + " ×";
+            } else if (res.body.error == "密码错误"){
+              this.passwordWarning = res.body.error + " ×";
+            }
+          }
+        });
+    },
     // 获取输入框焦点
     userfs: function(event) {
       this.usernameActive =  true;
+      this.usernameWarning = "";
     },
     passfs: function(event) {
       this.passwordActive = true;
+      this.passwordWarning = "";
     },
     // 用户名框焦点移除
     userbr: function(event) {
@@ -125,7 +156,6 @@ h1 {
 	border-radius: 2px;
 	width: 230px;
 	height: 40px;
-	margin-bottom: 30px;
 }
 
 .span {
@@ -186,11 +216,11 @@ h1 {
 
 
 .warning {
+  text-align: right;
+  margin: 5px 0;
+  height: 20px;
 	font-size: 15px;
 	color: #E24A1F;
-  position: absolute;
-  right: 10px;
-  top: 40px;
 }
 
 .button {
@@ -208,26 +238,16 @@ h1 {
 	text-align: center;
 	text-decoration: none;
 	/*font-family: SYHT, "Microsoft Yahei", "微软雅黑", Arial, Helvetica, sans-serif;*/
+  margin-bottom: 30px;
 }
 
 .button:active {
-	margin-top: 1px;
-	margin-bottom: 1px;
-	border-bottom: 0;
+	background-color: #118494;
 }
 
 #post {
  	background-color: #1BB2C7;
 }
 
-#reset {
-	float: left;
-	margin-left: 70px;
-	background-color: #B5B5B5;
-	border-bottom: 1px solid #A5A5A5;
-/*  	-moz-box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;
-  	-webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;
-  	box-shadow: 0.5px 0.5px 0.5px 0.5px #8A8A8A;*/
-}
 
 </style>

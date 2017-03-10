@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="register">暂时不开放注册哦亲(*/ω╲*)</h1>
-    <Register></Register>
+    <!-- <Register></Register> -->
   </div>
 </template>
 

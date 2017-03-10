@@ -3,11 +3,40 @@
     <router-link to='/' class="brand">Finn</router-link>
     <ul class="nav-right">
       <router-link to='/' class="nav-item">主页</router-link>
-      <router-link to='/login' class="nav-item">登录</router-link>
       <router-link to='/puzzle' class="nav-item">迷宫小游戏</router-link>
+      <a href="" @click='logout' class="nav-item" v-if="online">退出登录</a>
+      <router-link to='/login' class="nav-item" v-else>登录</router-link>
     </ul>
   </nav>
 </template>
+
+<script>
+export default {
+  data: function() {
+    return {
+      online: false
+    }
+  },
+  mounted: function() {
+    this.$http.get('/api/user')
+      .then(res => {  // success
+        if(res.body.username) {
+          this.online = true;
+        } else {
+          // this.$router.push('/');
+        }
+      });
+  },
+  methods: {
+    logout: function(event) {
+      this.$http.get('/api/logout')
+        .then(res => {  // success
+          this.online = false;
+        });
+    }
+  }
+}
+</script>
 
 <style>
 .nav {
