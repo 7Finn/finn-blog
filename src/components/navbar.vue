@@ -1,10 +1,10 @@
 <template>
   <nav id="navbar" class="nav">
-    <div class="brand">Finn</div>
+    <router-link to='/' class="brand">Finn</router-link>
     <ul class="nav-right">
-      <li class="nav-item"><a href="#">主页</a></li>
-      <!-- <li class="nav-item"><a href="#">联系我</a></li> -->
-      <router-link to='/foo' class="nav-item">联系我</router-link>
+      <router-link to='/' class="nav-item">主页</router-link>
+      <router-link to='/login' class="nav-item">登录</router-link>
+      <router-link to='/puzzle' class="nav-item">迷宫小游戏</router-link>
     </ul>
   </nav>
 </template>
@@ -20,6 +20,7 @@
 }
 
 .brand {
+  color: #000;
   font-size: 24px;
   float: left;
   width: 50px;

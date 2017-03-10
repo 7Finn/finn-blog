@@ -1,17 +1,15 @@
 <template>
   <div>
-    <navbar></navbar>
-    <div class="container">
-      <information></information>
-      <router-view></router-view>
+    <Navbar></Navbar>
+    <div id="container">
+      <router-view class="router"></router-view>
     </div>
-
   </div>
 </template>
 
 <script>
-import navbar from './components/navbar.vue'
-import information from './components/information'
+import Vue from 'vue'
+import Navbar from './components/navbar.vue'
 export default {
   name: 'app',
   data () {
@@ -19,7 +17,7 @@ export default {
       msg: 'Welcome to Your Vue.js App'
     }
   },
-  components: { navbar, information }
+  components: { Navbar }
 }
 </script>
 
@@ -48,10 +46,12 @@ a {
   text-decoration: none;
 }
 
-.container {
+#container {
   width: 70%;
   margin-left: auto;
   margin-right: auto;
 }
+
+
 
 </style>

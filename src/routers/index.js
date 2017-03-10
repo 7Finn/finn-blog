@@ -1,13 +1,17 @@
 import VueRouter from 'vue-router';
 import Index from '../views/index';
-import User from '../views/user';
+import Puzzle from '../views/puzzle';
+import Login from '../views/login';
 
 const routes = [{
     path: '/',
     component: Index
   }, {
-    path: '/user',
-    component: User
+    path: '/puzzle',
+    component: Puzzle
+  }, {
+    path: '/login',
+    component: Login
   }
 ];
 

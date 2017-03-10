@@ -39,19 +39,6 @@ if (app.get('env') == 'development') {
 // var mongoUrl = 'mongodb://localhost:27017/blog';
 // var _db;
 
-// view engine setup
-// app.set('views', path.join(__dirname, './view'));
-// app.engine('.html', ejs.__express);
-// app.set('view engine', 'html');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
-// app.use(express.static(path.join(__dirname, '/client/static')));
-
-// app.use('/', index);
-// app.use('/users', users);
-
 // 连接数据库
 // mongoClient.connect(mongoUrl, fcuntion(err, db) {
 //   if (err) {
