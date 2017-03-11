@@ -7,11 +7,12 @@ module.exports = function(db) {
     addArticle: function(article) {
     	return articles.insert(article);
     },
-    // showAllPosts: function() {
-    //     return new Promise(function(resolve, reject) {
-    //         resolve(posts.find());
-    //     });
-    // },
+    getAll: function() {
+			return new Promise(function(resolve, reject) {
+				console.log("查找所有");
+				resolve(articles.find().sort({date:-1}));
+			});
+    },
     getArticle: function(id) {
       return articles.findOne({_id:ObjectID(id)})
     },

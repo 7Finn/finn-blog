@@ -4,24 +4,29 @@
     <ul class="nav-right">
       <router-link to='/' class="nav-item">主页</router-link>
       <router-link to='/puzzle' class="nav-item">迷宫小游戏</router-link>
-      <a href="" @click='logout' class="nav-item" v-if="online">退出登录</a>
+      <span class="" v-if="online">
+        <router-link to='/manager' class="nav-item">管理</router-link>
+        <a @click='logout' class="nav-item nav-item-link">退出登录</a>
+      </span>
       <router-link to='/login' class="nav-item" v-else>登录</router-link>
     </ul>
   </nav>
 </template>
 
 <script>
+
 export default {
   data: function() {
     return {
-      online: false
+      online: this.$store.state.online
     }
   },
   mounted: function() {
     this.$http.get('/api/user')
       .then(res => {  // success
         if(res.body.username) {
-          this.online = true;
+          this.$store.state.online = true;
+          this.online = this.$store.state.online;
         } else {
           // this.$router.push('/');
         }
@@ -31,7 +36,8 @@ export default {
     logout: function(event) {
       this.$http.get('/api/logout')
         .then(res => {  // success
-          this.online = false;
+          this.$store.state.online = false;
+          this.online = this.$store.state.online;
         });
     }
   }
@@ -40,7 +46,7 @@ export default {
 
 <style>
 .nav {
-  background-color: #f9f9f9;
+  background-color: #fff;
   border-bottom: 1px solid #ddd;
   box-shadow: 1px 1px 1px #ddd;
   height: 70px;
@@ -69,4 +75,9 @@ export default {
   display: inline-block;
   margin: 0 10px;
 }
+
+.nav-item-link {
+  cursor: pointer;
+}
+
 </style>

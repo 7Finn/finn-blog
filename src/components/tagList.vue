@@ -13,7 +13,7 @@
 .tag-list {
   width: 160px;
   border-radius: 2px;
-  background-color: #f9f9f9;
+  background-color: #fff;
   box-shadow: 1px 1px 1px #ddd;
   padding: 10px;
 }

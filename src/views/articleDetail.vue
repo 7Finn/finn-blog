@@ -2,35 +2,31 @@
   <div>
     <div class="right">
       <Information id="information"></Information>
-      <TagList></TagList>
     </div>
     <div class="article-list">
-      <FinnArticle v-for="article in articles" v-bind:article="article"></FinnArticle>
+      <ArticleDetail v-bind:article="article"></ArticleDetail>
     </div>
   </div>
 </template>
 
 <script>
-import FinnArticle from '../components/article'
+import ArticleDetail from '../components/articleDetail'
 import Information from '../components/information'
-import TagList from '../components/tagList'
 
 export default {
   data: function() {
     return {
-      articles: []
+      article: null
     }
   },
   components: {
-    FinnArticle,
-    Information,
-    TagList
+    ArticleDetail,
+    Information
   },
-  mounted: function() {
-    this.$http.get('/api/article/getall')
+  beforeCreate: function() {
+    this.$http.get('/api/article/detail/' + this.$route.params['id'])
       .then(res => { //success
-        this.articles = res.body.articles;
-        console.log(this.articles);
+        this.article = res.body;
       }, res=> { //fail
         console.log("错误返回");
       });

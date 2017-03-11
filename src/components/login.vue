@@ -82,6 +82,7 @@ export default {
       this.$http.post('/api/login', data)
         .then(res => {  // success
           if(res.body.user) {
+            this.$store.state.online = true;
             this.$router.push('/');
           } else {
             if (res.body.error == "用户不存在") {
@@ -129,7 +130,7 @@ h1 {
   text-align: center;
   height: 300px;
 	width: 240px;
-	background-color: #f9f9f9;
+	background-color: #fff;
 	border-radius: 2px;
 	-moz-box-shadow: 1px 1px 1px #ddd;
 	-webkit-box-shadow: 1px 1px 1px #ddd;
@@ -161,7 +162,7 @@ h1 {
 .span {
 	position: absolute;
 	left: 20px;
-	background-color: #f9f9f9;
+	background-color: #fff;
 	z-index: 0;
 	font-size: 15px;
 	-moz-transition: all 0.1s;

@@ -1,6 +1,6 @@
 <template>
-  <article class="article">
-    <h1><router-link v-bind:to='articleURL'>{{ article.title }}</router-link></h1>
+  <article class="article" v-if="article">
+    <h1>{{ article.title }}</h1>
     <div v-html="compiledMarkdown" id="marked-html"></div>
     <hr />
     <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
@@ -21,9 +21,6 @@ export default {
     }
   },
   computed: {
-    articleURL: function() {
-      return '/article/detail/' + this.article.id;
-    },
     compiledMarkdown: function () {
       return marked(this.article.content, { sanitize: true })
     }

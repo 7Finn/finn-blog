@@ -47,8 +47,11 @@ module.exports = function(db) {
   }
 
 
-  var userApi = require('./apis/usersApi')(db);
-  app.use('/api', userApi);
+  var usersApi = require('./apis/usersApi')(db);
+  var articlesApi = require('./apis/articlesApi')(db);
+
+  app.use('/api', usersApi);
+  app.use('/api/article', articlesApi);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

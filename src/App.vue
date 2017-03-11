@@ -47,9 +47,13 @@ a {
 }
 
 #container {
+  position: absolute;
+  left: 0;
+  right: 0;
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+  height: 85%;
 }
 
 
