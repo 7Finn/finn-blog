@@ -9,7 +9,6 @@ module.exports = function(db) {
     },
     getAll: function() {
 			return new Promise(function(resolve, reject) {
-				console.log("查找所有");
 				resolve(articles.find().sort({date:-1}));
 			});
     },

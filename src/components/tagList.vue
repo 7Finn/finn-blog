@@ -1,13 +1,30 @@
 <template>
   <div class="tag-list">
     <ul>
-      <li><a href="#">JavaScript(20)</a></li>
-      <li><a href="#">Python(0)</a></li>
+      <li v-for="tag in tags"><a href="#"> {{ tag.name }}({{ tag.articlesId.length }})</a></li>
     </ul>
   </div>
 </template>
 
+<script>
 
+export default {
+  data: function () {
+    return {
+      tags : []
+    }
+  },
+  mounted: function() {
+    this.$http.get('/api/article/tags')
+      .then(res => { //success
+        this.tags = res.body;
+      }, res=> { //fail
+        console.log("错误返回");
+      });
+  }
+}
+
+</script>
 
 <style>
 .tag-list {

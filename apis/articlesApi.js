@@ -3,6 +3,7 @@ var router = express.Router();
 
 module.exports = function(db) {
   var articlesModel = require('../models/articlesModel')(db);
+  var tagsModel = require('../models/tagsModel')(db);
 
   router.get('/getall', function(req, res) {
     articlesModel.getAll()
@@ -47,8 +48,10 @@ module.exports = function(db) {
     article.lastModifyDate = date;
     articlesModel.addArticle(article)
       .then(data => {
-        if (data) res.json(true);
-        else res.json(false);
+        tagsModel.addTags(article.tags, data.insertedIds);
+      })
+      .then(data => {
+        res.json(true);
       })
       .catch(err => {
         res.json(false);
@@ -64,6 +67,25 @@ module.exports = function(db) {
       })
       .catch(err => {
         res.json(false);
+      })
+  });
+
+  router.get('/tags', function(req, res, next) {
+    tagsModel.getAllTags()
+      .then(data => {
+        let tags = []
+        data.forEach(function (tag, i) {
+          tags.push({
+            id: tag._id,
+            name: tag.name,
+            articlesId: tag.articlesId
+          })
+        }, function(err) {
+          res.json(tags);
+        });
+      })
+      .catch(err => {
+        res.json(err);
       })
   });
 

@@ -30,7 +30,6 @@ export default {
     this.$http.get('/api/article/getall')
       .then(res => { //success
         this.articles = res.body.articles;
-        console.log(this.articles);
       }, res=> { //fail
         console.log("错误返回");
       });
