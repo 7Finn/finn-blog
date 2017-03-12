@@ -14,7 +14,8 @@ module.exports = function(db) {
 			});
     },
     getArticle: function(id) {
-      return articles.findOne({_id:ObjectID(id)})
+			articles.updateOne({_id:ObjectID(id)}, {$inc:{pv:1}}); //自增长一点访问
+      return articles.findOne({_id:ObjectID(id)});
     },
     deleteArticle: function(id) {
       return articles.remove({_id:ObjectID(id)});

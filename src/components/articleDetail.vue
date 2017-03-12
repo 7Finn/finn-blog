@@ -4,7 +4,7 @@
     <div v-html="compiledMarkdown" id="marked-html"></div>
     <hr />
     <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
-    <span class="article-pv"><i class="fa fa-eye" aria-hidden="true"></i>  {{ article.pv }} </span>
+    <span class="article-pv"><i class="fa fa-eye" aria-hidden="true"></i>  {{ article.pv }}次阅读 </span>
     <span class="tags-group">
       <a v-for="tag in article.tags"> {{ tag }} </a>
     </span>

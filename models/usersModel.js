@@ -46,6 +46,24 @@ module.exports = function(db) {
 					resolve(true);
 	      });
 			});
-    }
+    },
+
+		// 参数:
+		// username: 用户名
+		// 返回值:
+		// boolean
+		isManager: function(username) {
+			return new Promise(function(resolve, reject) {
+				users.findOne({username: username}, function(err, doc) {
+					if (doc == null) {
+						reject(false);
+					} else if (doc.manager == true) {
+						resolve(true);
+					} else {
+						reject(false);
+					}
+				});
+			});
+		}
   }
 };

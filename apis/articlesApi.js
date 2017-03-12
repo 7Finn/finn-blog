@@ -59,6 +59,7 @@ module.exports = function(db) {
     let id = req.params.id;
     articlesModel.getArticle(id)
       .then(data => {
+        data.date = data.date.toLocaleString();
         res.json(data);
       })
       .catch(err => {
