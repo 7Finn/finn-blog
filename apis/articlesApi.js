@@ -4,6 +4,7 @@ var router = express.Router();
 module.exports = function(db) {
   var articlesModel = require('../models/articlesModel')(db);
   var tagsModel = require('../models/tagsModel')(db);
+  var usersModel = require('../models/usersModel')(db);
 
   router.get('/getall', function(req, res) {
     articlesModel.getAll()
@@ -36,7 +37,9 @@ module.exports = function(db) {
     var date = new Date();
     article.date = date;
     article.lastModifyDate = date;
-    articlesModel.addArticle(article)
+    // 验证权限
+    usersModel.isManager(req.session.user.username)
+      .then(articlesModel.addArticle(article))
       .then(data => {
         tagsModel.addTags(article.tags, data.insertedIds[1]);
       })

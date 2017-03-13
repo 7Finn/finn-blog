@@ -1,5 +1,5 @@
 <template>
-  <div id="editor">
+  <div id="editor" v-if="this.$store.state.isManager">
     <input v-model="title" class="title" placeholder="标题"/>
     <input v-model="tags" class="tags" placeholder="标签，用;分隔"/>
     <div class="mark-area">
