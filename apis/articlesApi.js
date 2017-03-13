@@ -27,7 +27,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        res.json(false);
+        console.log(err);
       });
   });
 
@@ -44,7 +44,7 @@ module.exports = function(db) {
         res.json(true);
       })
       .catch(err => {
-        res.json(false);
+        console.log(err);
       });
   });
 
@@ -56,7 +56,7 @@ module.exports = function(db) {
         res.json(data);
       })
       .catch(err => {
-        res.json(false);
+        console.log(err);
       })
   });
 
@@ -75,7 +75,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        res.json(err);
+        console.log(err);
       })
   });
 
@@ -103,20 +103,9 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        res.json(err);
+        console.log(err);
       });
   });
-
-  // router.post('/category', function(req, res, next) {
-  //   var articlesId = req.body;
-  //   tagsModel.getArticlesById(articlesId)
-  //     .then(data => {
-  //       res.json(data);
-  //     })
-  //     .catch(err => {
-  //       res.json(err);
-  //     })
-  // });
 
   return router;
 }
