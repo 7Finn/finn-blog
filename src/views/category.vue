@@ -5,7 +5,7 @@
       <TagList></TagList>
     </div>
     <div class="article-list">
-      <FinnArticle v-for="article in articles" v-bind:article="article"></FinnArticle>
+      <FinnArticle v-for="article in this.$store.state.articles" v-bind:article="article"></FinnArticle>
     </div>
   </div>
 </template>
@@ -18,7 +18,6 @@ import TagList from '../components/tagList'
 export default {
   data: function() {
     return {
-      articles: []
     }
   },
   components: {
@@ -27,9 +26,9 @@ export default {
     TagList
   },
   mounted: function() {
-    this.$http.get('/api/article/getall')
+    this.$http.get('/api/article/category/' + this.$route.params['name'])
       .then(res => { //success
-        this.articles = res.body;
+        this.$store.state.articles = res.body;
       }, res=> { //fail
         console.log("错误返回");
       });

@@ -12,14 +12,6 @@ module.exports = function(db) {
         data.forEach(function (article, i) {
           // 过长的话根据换行符进行裁剪
           let content = article.content;
-          // let cutPosition = content.indexOf("\n");
-          // let nNum = 0;
-          // while (cutPosition > -1 && nNum <= 8) {
-          //   nNum++;
-          //   cutPosition = content.indexOf("\n", cutPosition + 1);
-          // }
-          //
-          // content = content.substr(0, cutPosition) + '\n...';
           if (content.length > 100) content = content.substr(0, 100) + '\n...';
 
           articles.push({
@@ -31,9 +23,7 @@ module.exports = function(db) {
             tags: article.tags
           });
         }, function(err) {
-          res.json({
-            articles: articles
-          });
+          res.json(articles);
         });
       })
       .catch(err => {
@@ -48,7 +38,7 @@ module.exports = function(db) {
     article.lastModifyDate = date;
     articlesModel.addArticle(article)
       .then(data => {
-        tagsModel.addTags(article.tags, data.insertedIds);
+        tagsModel.addTags(article.tags, data.insertedIds[1]);
       })
       .then(data => {
         res.json(true);
@@ -88,6 +78,45 @@ module.exports = function(db) {
         res.json(err);
       })
   });
+
+  router.get('/category/:name', function(req, res, next) {
+    var name = req.params.name;
+    tagsModel.getTagByName(name)
+      .then(articlesModel.getArticlesByTag)
+      .then(data => {
+        var articles = [];
+        data.forEach(function (article, i) {
+          // 过长的话根据换行符进行裁剪
+          let content = article.content;
+          if (content.length > 100) content = content.substr(0, 100) + '\n...';
+
+          articles.push({
+            id: article._id,
+            title : article.title,
+            content: content,
+            date: article.date.toLocaleString(),
+            pv: article.pv,
+            tags: article.tags
+          });
+        }, function(err) {
+          res.json(articles);
+        });
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+  // router.post('/category', function(req, res, next) {
+  //   var articlesId = req.body;
+  //   tagsModel.getArticlesById(articlesId)
+  //     .then(data => {
+  //       res.json(data);
+  //     })
+  //     .catch(err => {
+  //       res.json(err);
+  //     })
+  // });
 
   return router;
 }

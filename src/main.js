@@ -18,7 +18,8 @@ Vue.use(Vuex);
 // 应用级状态
 const VuexStore = new Vuex.Store({
     state: {
-        online : false
+        online : false,
+        articles: []
     },
     mutations: {
     }

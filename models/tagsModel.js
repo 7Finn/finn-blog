@@ -11,6 +11,9 @@ module.exports = function(db) {
         tags.update({name: name}, {$push:{'articlesId': articleId}},{upsert:true});
       });
     },
+    getTagByName: function(name) {
+      return tags.findOne({name: name})
+    },
     getAllTags: function() {
       return new Promise(function(resolve, reject) {
 				resolve(tags.find());

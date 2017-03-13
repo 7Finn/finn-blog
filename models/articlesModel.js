@@ -16,6 +16,9 @@ module.exports = function(db) {
 			articles.updateOne({_id:ObjectID(id)}, {$inc:{pv:1}}); //自增长一点访问
       return articles.findOne({_id:ObjectID(id)});
     },
+		getArticlesByTag: function(tag) {
+			return articles.find({tags: tag.name});
+		},
     deleteArticle: function(id) {
       return articles.remove({_id:ObjectID(id)});
     },

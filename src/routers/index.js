@@ -8,6 +8,7 @@ import ManagerBlogs from '../views/managerBlogs'
 import ManagerTags from '../views/managerTags'
 import Editor from '../views/editor'
 import ArticleDetail from '../views/articleDetail'
+import Category from '../views/category'
 
 const routes = [{
     path: '/',
@@ -34,6 +35,9 @@ const routes = [{
   }, {
     path: '/article/detail/:id',
     component: ArticleDetail
+  }, {
+    path: '/category/:name',
+    component: Category
   }
 ];
 

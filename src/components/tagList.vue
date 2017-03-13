@@ -1,12 +1,13 @@
 <template>
   <div class="tag-list">
     <ul>
-      <li v-for="tag in tags"><a href="#"> {{ tag.name }}({{ tag.articlesId.length }})</a></li>
+      <Tag v-for="tag in tags" v-bind:tag="tag"></Tag>
     </ul>
   </div>
 </template>
 
 <script>
+import Tag from './tag'
 
 export default {
   data: function () {
@@ -21,6 +22,9 @@ export default {
       }, res=> { //fail
         console.log("错误返回");
       });
+  },
+  components: {
+    Tag
   }
 }
 
