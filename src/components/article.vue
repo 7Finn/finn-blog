@@ -34,6 +34,13 @@ export default {
 
 
 <style>
+
+pre {
+  background-color: #f6f8fa;
+  border-radius: 2px;
+  padding: 16px;
+  overflow: auto;
+}
 .article {
   border-radius: 2px;
   background-color: #fff;

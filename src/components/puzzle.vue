@@ -49,7 +49,7 @@ var varGroup = {
 	stepNum : 0,
 	stepDiv : null,
 	charArr : ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'],
-	picNumber: 4
+	picNumber: 3
 }
 
 
@@ -317,11 +317,9 @@ function recover() {
 
 #puzzle {
   text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 20px;
   width: 500px;
   height: 600px;
   background-color: #ecf0f1;
@@ -337,11 +335,8 @@ function recover() {
 #puzzle .info-div {
   font-family: 'Century Gothic', serif;
   font-size: 20px;
-  width: 200px;
-  height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
 }
 
 
@@ -472,7 +467,6 @@ function recover() {
 #puzzle .b1 {background-image: url(../assets/img/1.jpg);}
 #puzzle .b2 {background-image: url(../assets/img/2.jpg);}
 #puzzle .b3 {background-image: url(../assets/img/3.jpg);}
-#puzzle .b4 {background-image: url(../assets/img/4.jpg);}
 
 
 

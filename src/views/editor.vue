@@ -3,8 +3,8 @@
     <input v-model="title" class="title" placeholder="标题"/>
     <input v-model="tags" class="tags" placeholder="标签，用;分隔"/>
     <div class="mark-area">
-      <textarea :value="input" @input="update" id="marked-mk"></textarea>
-      <div v-html="compiledMarkdown" id="marked-html"></div>
+      <textarea class="marked-mk" :value="input" @input="update" ></textarea>
+      <div class="marked-html" v-html="compiledMarkdown" ></div>
     </div>
     <button type="button" name="button" class="post" @click='submit'>发表博客</button>
   </div>
@@ -71,12 +71,12 @@ html, body, #editor {
   margin: 0;
   height: 100%;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  color: #333;
 }
 
 textarea, #editor div {
+  position: absolute;
   display: inline-block;
-  width: 49%;
+  width: 50%;
   height: 100%;
   vertical-align: top;
   box-sizing: border-box;
@@ -84,11 +84,11 @@ textarea, #editor div {
   overflow: auto;
 }
 
-textarea {
+#editor .marked-mk {
+  left: 0;
   border: none;
   border-right: 1px solid #ccc;
   resize: none;
-  height: 100%;
   outline: none;
   background-color: #f6f6f6;
   font-size: 14px;
@@ -96,8 +96,8 @@ textarea {
   padding: 20px;
 }
 
-code {
-  color: #f66;
+#editor .marked-html {
+  right: 0;
 }
 
 #editor .title {
