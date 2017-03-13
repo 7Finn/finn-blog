@@ -22,8 +22,7 @@ module.exports = function(db) {
         req.session.user = data.user;
         res.json(data);
       })
-      .catch(data => {
-        res.json(data);
+      .catch(err => {
       })
   });
 
@@ -33,8 +32,7 @@ module.exports = function(db) {
       .then(data => {
         if (data) res.json(true);
       })
-      .catch(data => {
-        res.json(false);
+      .catch(err => {
       });
   });
 

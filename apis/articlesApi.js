@@ -27,7 +27,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        console.log(err);
+        res.json(err);
       });
   });
 
@@ -44,7 +44,7 @@ module.exports = function(db) {
         res.json(true);
       })
       .catch(err => {
-        console.log(err);
+        res.json(err);
       });
   });
 
@@ -56,7 +56,7 @@ module.exports = function(db) {
         res.json(data);
       })
       .catch(err => {
-        console.log(err);
+        res.json(err);
       })
   });
 
@@ -75,7 +75,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        console.log(err);
+        res.json(err);
       })
   });
 
@@ -103,7 +103,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        console.log(err);
+        res.json(err);
       });
   });
 
