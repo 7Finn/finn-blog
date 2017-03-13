@@ -4,7 +4,7 @@
     <ul class="nav-right">
       <router-link to='/' class="nav-item">主页</router-link>
       <router-link to='/puzzle' class="nav-item">迷宫小游戏</router-link>
-      <span class="" v-if="online">
+      <span class="" v-if="this.$store.state.isManager">
         <router-link to='/manager' class="nav-item">管理</router-link>
         <a @click='logout' class="nav-item nav-item-link">退出登录</a>
       </span>
@@ -18,15 +18,13 @@
 export default {
   data: function() {
     return {
-      online: this.$store.state.online
     }
   },
   mounted: function() {
     this.$http.get('/api/user')
       .then(res => {  // success
         if(res.body.username) {
-          this.$store.state.online = true;
-          this.online = this.$store.state.online;
+          this.$store.state.isManager = true;
         } else {
           // this.$router.push('/');
         }
@@ -36,8 +34,7 @@ export default {
     logout: function(event) {
       this.$http.get('/api/logout')
         .then(res => {  // success
-          this.$store.state.online = false;
-          this.online = this.$store.state.online;
+          this.$store.state.isManager = false;
         });
     }
   }

@@ -82,7 +82,7 @@ export default {
       this.$http.post('/api/login', data)
         .then(res => {  // success
           if(res.body.user) {
-            this.$store.state.online = true;
+            this.$store.state.isManager = true;
             this.$router.push('/');
           } else {
             if (res.body.error == "用户不存在") {
