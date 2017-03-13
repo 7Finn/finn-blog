@@ -23,6 +23,7 @@ module.exports = function(db) {
         res.json(data);
       })
       .catch(err => {
+        res.json(err);
       })
   });
 
@@ -33,6 +34,7 @@ module.exports = function(db) {
         if (data) res.json(true);
       })
       .catch(err => {
+        res.json(err);
       });
   });
 
