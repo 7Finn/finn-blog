@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     update: _.debounce(function (e) {
-      this.input = e.target.value
+      this.input = e.target.value;
     }, 300),
     submit: function() {
       let date = new Date();

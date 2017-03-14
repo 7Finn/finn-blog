@@ -3,6 +3,10 @@
     <div class="right">
       <Information id="information"></Information>
       <TagList></TagList>
+      <button @click="backTop" class="back-top" v-if="this.$store.state.scrollTop > 300">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+        返回顶部
+      </button>
     </div>
     <div class="article-list">
       <FinnArticle v-for="article in this.$store.state.indexArticles" v-bind:article="article"></FinnArticle>
@@ -52,6 +56,8 @@ export default {
       let scrollHeight = document.body.scrollHeight;
       let clientHeight = document.body.clientHeight;
 
+      this.$store.state.scrollTop = scrollTop;
+
       if (scrollTop + clientHeight >= scrollHeight) {
         // 主页
         if (this.$route.name == 'index' && this.$store.state.articlesLoading == false) {
@@ -70,6 +76,11 @@ export default {
           //
         }
     }, false);
+  },
+  methods: {
+    backTop: function() {
+      document.body.scrollTop = 0;
+    }
   }
 }
 </script>
@@ -104,6 +115,25 @@ footer {
 .loading {
   margin-right: 220px;
   text-align: center;
+}
+
+.back-top {
+  cursor: pointer;
+  position: fixed;
+  right: 20%;
+  height: 40px;
+  bottom: 50px;
+  outline: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100px;
+  transition: all 0.2s;
+}
+
+.back-top:hover {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
 }
 
 .loading span {

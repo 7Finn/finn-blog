@@ -2,6 +2,10 @@
   <div>
     <div class="right">
       <Information id="information"></Information>
+      <button @click="backTop" class="back-top" v-if="this.$store.state.scrollTop > 300">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+        返回顶部
+      </button>
     </div>
     <ArticleDetail class="article-detail" v-bind:article="article"></ArticleDetail>
   </div>
@@ -28,6 +32,11 @@ export default {
       }, res=> { //fail
         console.log("错误返回");
       });
+  },
+  methods: {
+    backTop: function() {
+      document.body.scrollTop = 0;
+    }
   }
 }
 </script>

@@ -22,6 +22,8 @@ const VuexStore = new Vuex.Store({
         isManager : false,
         indexArticles: [],
         categoryArticles: [],
+        tags: [],
+        scrollTop: 0,
         articlesLoading: false
     },
     mutations: {

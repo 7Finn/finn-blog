@@ -1,7 +1,7 @@
 <template>
   <div class="tag-list">
     <ul>
-      <Tag v-for="tag in tags" v-bind:tag="tag"></Tag>
+      <Tag v-for="tag in this.$store.state.tags" v-bind:tag="tag"></Tag>
     </ul>
   </div>
 </template>
@@ -12,16 +12,17 @@ import Tag from './tag'
 export default {
   data: function () {
     return {
-      tags : []
     }
   },
   mounted: function() {
-    this.$http.get('/api/article/tags')
-      .then(res => { //success
-        this.tags = res.body;
-      }, res=> { //fail
-        console.log("错误返回");
-      });
+    if (this.$store.state.tags.length == 0) {
+      this.$http.get('/api/article/tags')
+        .then(res => { //success
+           this.$store.state.tags = res.body;
+        }, res=> { //fail
+          console.log("错误返回");
+        });
+    }
   },
   components: {
     Tag
