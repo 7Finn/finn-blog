@@ -12,6 +12,11 @@ module.exports = function(db) {
 				resolve(articles.find().sort({date:-1}));
 			});
     },
+		getArticlesFrom: function(start, num) {
+			return new Promise(function(resolve, reject) {
+				resolve(articles.find().sort({date:-1}).skip(parseInt(start)).limit(num));
+			});
+		},
     getArticle: function(id) {
 			articles.updateOne({_id:ObjectID(id)}, {$inc:{pv:1}}); //自增长一点访问
       return articles.findOne({_id:ObjectID(id)});

@@ -1,5 +1,8 @@
 <template>
-  <h1>管理博客</h1>
+  <div class="">
+    <h1>管理博客</h1>
+    <router-link to='/editor'>发表博客</router-link>
+  </div>
 </template>
 
 <script>

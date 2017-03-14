@@ -322,7 +322,7 @@ function recover() {
   padding-top: 20px;
   width: 500px;
   height: 600px;
-  background-color: #ecf0f1;
+  background-color: #fff;
   border-radius: 5px;
   -moz-box-shadow: 1px -1px 1px #d4d8d9 inset, 1px 1px 1px 1px #e3e3e3;
   -webkit-box-shadow: 1px -1px 1px #d4d8d9 inset, 1px 1px 1px 1px #e3e3e3;

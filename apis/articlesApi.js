@@ -6,8 +6,10 @@ module.exports = function(db) {
   var tagsModel = require('../models/tagsModel')(db);
   var usersModel = require('../models/usersModel')(db);
 
-  router.get('/getall', function(req, res) {
-    articlesModel.getAll()
+  router.get('/getArticles/:start', function(req, res) {
+    let start = req.params.start;
+    console.log(start);
+    articlesModel.getArticlesFrom(start, 5) // 一次拿5篇
       .then(data => {
         let articles = [];
         data.forEach(function (article, i) {
@@ -28,6 +30,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
+        console.log(err);
         res.json(err);
       });
   });
