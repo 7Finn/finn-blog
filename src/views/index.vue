@@ -7,6 +7,10 @@
     <div class="article-list">
       <FinnArticle v-for="article in this.$store.state.articles" v-bind:article="article"></FinnArticle>
     </div>
+    <div class="loading" v-if="this.$store.state.articlesLoading">
+      <i class="fa fa-clock-o" aria-hidden="true"></i>
+      <span>加载中</span>
+    </div>
   </div>
 </template>
 
@@ -27,9 +31,11 @@ export default {
   },
   mounted: function() {
     // 初始化清空文章列表
+    this.$store.state.articlesLoading = true;
     this.$store.state.articles = [];
     this.$http.get('/api/article/getArticles?start=' + this.$store.state.articles.length)
       .then(res => { //success
+        this.$store.state.articlesLoading = false;
         this.$store.state.articles = [...this.$store.state.articles, ...res.body];
       }, res=> { //fail
         console.log("错误返回");
@@ -48,8 +54,10 @@ export default {
       if (scrollTop + clientHeight >= scrollHeight) {
         // 主页
         if (this.$route.name == 'index') {
+          this.$store.state.articlesLoading = true;
           this.$http.get('/api/article/getArticles?start=' + this.$store.state.articles.length)
             .then(res => { //success
+              this.$store.state.articlesLoading = false;
               this.$store.state.articles = [...this.$store.state.articles, ...res.body];
             }, res=> { //fail
               console.log("错误返回");
@@ -66,6 +74,19 @@ export default {
 </script>
 
 <style>
+hr {
+  border-color: #ddd;
+}
+
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align: center;
+  color: #888;
+}
+
 .article-list {
   margin-right: 220px;
 }
@@ -79,4 +100,12 @@ export default {
   margin-bottom: 20px;
 }
 
+.loading {
+  margin-right: 220px;
+  text-align: center;
+}
+
+.loading span {
+  margin-left: 10px;
+}
 </style>

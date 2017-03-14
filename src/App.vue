@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div id="outer">
     <Navbar></Navbar>
     <div id="container">
       <router-view class="router"></router-view>
     </div>
+    <footer>©2017 吴其锋. All rights reserved.</footer>
   </div>
 </template>
 
@@ -34,6 +35,12 @@ body {
   background-color: #eaeaea;
 }
 
+#outer {
+  position: relative;
+  height: auto;
+  min-height: 100%;
+}
+
 ul {
   list-style: none;
   margin: 0;
@@ -47,8 +54,8 @@ a {
 
 #container {
   width: 70%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
+  padding-bottom: 40px;
 }
 
 

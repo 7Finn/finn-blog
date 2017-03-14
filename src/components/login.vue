@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <h1>用户登录</h1>
+    <h1>登录</h1>
     <form @submit.prevent="submit">
       <div class="input-div" v-bind:class="userDivClass">
         <span class="span" v-bind:class="userSpanClass">用户名</span>
@@ -141,7 +141,7 @@ h1 {
 }
 
 
-.switch-to-signup {
+#login .switch-to-signup {
 	color: #444;
 	position: absolute;
 	font-size: 14px;
@@ -149,7 +149,7 @@ h1 {
 	bottom: 10px;
 }
 
-.input-div {
+#login .input-div {
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
@@ -159,7 +159,7 @@ h1 {
 	height: 40px;
 }
 
-.span {
+#login .span {
 	position: absolute;
 	left: 20px;
 	background-color: #fff;
@@ -170,38 +170,38 @@ h1 {
   transition: all 0.1s;
 }
 
-.init-position {
+#login .init-position {
 	top: 9px;
 	color: #C8C8C8;
 }
 
-.up-position {
+#login .up-position {
 	top: -12px;
 	color: #77C2FF;
 }
 
-.used-span {
+#login .used-span {
 	top: -12px;
 	color: #C8C8C8;
 }
 
-.warning-span {
+#login .warning-span {
 	color: #E24A1F;
 }
 
-.used-div {
+#login .used-div {
 	border: 1px solid #C8C8C8;
 }
 
-.blue-div {
+#login .blue-div {
 	border: 1px solid #77C2FF;
 }
 
-.red-div {
+#login .red-div {
 	border: 1px solid #E24A1F;
 }
 
-.input {
+#login .input {
 	background-color: transparent;
 	top: 10px;
   width: 85%;
@@ -216,7 +216,7 @@ h1 {
 }
 
 
-.warning {
+#login .warning {
   text-align: right;
   margin: 5px 0;
   height: 20px;
@@ -224,7 +224,7 @@ h1 {
 	color: #E24A1F;
 }
 
-.button {
+#login .button {
   padding: 0;
 	margin-left: auto;
 	margin-right: auto;
@@ -242,7 +242,7 @@ h1 {
   margin-bottom: 30px;
 }
 
-.button:active {
+#login .button:active {
 	background-color: #118494;
 }
 
