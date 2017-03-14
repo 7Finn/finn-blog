@@ -3,7 +3,7 @@
     <router-link to='/' class="brand">Finn</router-link>
     <ul class="nav-right">
       <router-link to='/' class="nav-item">主页</router-link>
-      <router-link to='/puzzle' class="nav-item">迷宫小游戏</router-link>
+      <router-link to='/smallapps' class="nav-item">小应用</router-link>
       <span class="" v-if="this.$store.state.isManager">
         <router-link to='/manager' class="nav-item">管理</router-link>
         <a @click='logout' class="nav-item nav-item-link">退出登录</a>

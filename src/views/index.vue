@@ -5,7 +5,7 @@
       <TagList></TagList>
     </div>
     <div class="article-list">
-      <FinnArticle v-for="article in articles" v-bind:article="article"></FinnArticle>
+      <FinnArticle v-for="article in this.$store.state.articles" v-bind:article="article"></FinnArticle>
     </div>
   </div>
 </template>
@@ -18,7 +18,6 @@ import TagList from '../components/tagList'
 export default {
   data: function() {
     return {
-      articles: []
     }
   },
   components: {
@@ -27,14 +26,16 @@ export default {
     TagList
   },
   mounted: function() {
-    this.$http.get('/api/article/getArticles/' + this.articles.length)
+    // 初始化清空文章列表
+    this.$store.state.articles = [];
+    this.$http.get('/api/article/getArticles?start=' + this.$store.state.articles.length)
       .then(res => { //success
-        this.articles = [...this.articles, ...res.body];
+        this.$store.state.articles = [...this.$store.state.articles, ...res.body];
       }, res=> { //fail
         console.log("错误返回");
       });
     // window绑定
-
+    // 绑定scroll
     window.addEventListener("scroll", () => {
       // 网页可见区域高： document.body.clientHeight;
       // 网页被卷去的高： document.body.scrollTop;
@@ -45,14 +46,21 @@ export default {
       let clientHeight = document.body.clientHeight;
 
       if (scrollTop + clientHeight >= scrollHeight) {
-        this.$http.get('/api/article/getArticles/' + this.articles.length)
-          .then(res => { //success
-            this.articles = [...this.articles, ...res.body];
-          }, res=> { //fail
-            console.log("错误返回");
-          });
+        // 主页
+        if (this.$route.name == 'index') {
+          this.$http.get('/api/article/getArticles?start=' + this.$store.state.articles.length)
+            .then(res => { //success
+              this.$store.state.articles = [...this.$store.state.articles, ...res.body];
+            }, res=> { //fail
+              console.log("错误返回");
+            });
+          }
+        } else if (this.$route.name == 'category') {
+          //
+        } else {
+          //
         }
-      }, false);
+    }, false);
   }
 }
 </script>

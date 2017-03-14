@@ -6,8 +6,8 @@ module.exports = function(db) {
   var tagsModel = require('../models/tagsModel')(db);
   var usersModel = require('../models/usersModel')(db);
 
-  router.get('/getArticles/:start', function(req, res) {
-    let start = req.params.start;
+  router.get('/getArticles', function(req, res) {
+    let start = req.query.start;
     articlesModel.getArticlesFrom(start, 5) // 一次拿5篇
       .then(data => {
         let articles = [];
@@ -86,8 +86,9 @@ module.exports = function(db) {
       })
   });
 
-  router.get('/category/:name', function(req, res, next) {
-    var name = req.params.name;
+  router.get('/category', function(req, res, next) {
+    var name = req.query.name;
+    if (name == '') res.json(err);
     tagsModel.getTagByName(name)
       .then(articlesModel.getArticlesByTag)
       .then(data => {

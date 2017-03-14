@@ -26,7 +26,8 @@ export default {
     TagList
   },
   mounted: function() {
-    this.$http.get('/api/article/category/' + this.$route.params['name'])
+    this.$store.state.articles = [];
+    this.$http.get('/api/article/category?name=' + this.$route.params['name'])
       .then(res => { //success
         this.$store.state.articles = res.body;
       }, res=> { //fail

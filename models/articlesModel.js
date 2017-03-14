@@ -22,7 +22,7 @@ module.exports = function(db) {
       return articles.findOne({_id:ObjectID(id)});
     },
 		getArticlesByTag: function(tag) {
-			return articles.find({tags: tag.name});
+			return articles.find({tags: tag.name}).sort({date:-1});
 		},
     deleteArticle: function(id) {
       return articles.remove({_id:ObjectID(id)});

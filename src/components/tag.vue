@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     setCategory: function() {
-      this.$http.get('/api/article/category/' + this.tag.name)
+      this.$http.get('/api/article/category?name=' + this.tag.name)
         .then(res => { //success
           this.$store.state.articles = res.body;
         }, res=> { //fail

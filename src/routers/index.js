@@ -9,8 +9,10 @@ import ManagerTags from '../views/managerTags'
 import Editor from '../views/editor'
 import ArticleDetail from '../views/articleDetail'
 import Category from '../views/category'
+import SmallApps from '../views/smallApps'
 
 const routes = [{
+    name: 'index',
     path: '/',
     component: Index
   }, {
@@ -36,8 +38,12 @@ const routes = [{
     path: '/article/detail/:id',
     component: ArticleDetail
   }, {
+    name: 'category',
     path: '/category/:name',
     component: Category
+  }, {
+    path: '/smallapps',
+    component: SmallApps
   }
 ];
 
