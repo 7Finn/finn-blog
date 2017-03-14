@@ -8,7 +8,6 @@ module.exports = function(db) {
 
   router.get('/getArticles/:start', function(req, res) {
     let start = req.params.start;
-    console.log(start);
     articlesModel.getArticlesFrom(start, 5) // 一次拿5篇
       .then(data => {
         let articles = [];
@@ -42,7 +41,9 @@ module.exports = function(db) {
     article.lastModifyDate = date;
     // 验证权限
     usersModel.isManager(req.session.user.username)
-      .then(articlesModel.addArticle(article))
+      .then(data => {
+        return articlesModel.addArticle(article);
+      })
       .then(data => {
         tagsModel.addTags(article.tags, data.insertedIds[1]);
       })

@@ -5,7 +5,7 @@ module.exports = function(db) {
 
 	return {
     addArticle: function(article) {
-    	return articles.insert(article);
+			return articles.insert(article);
     },
     getAll: function() {
 			return new Promise(function(resolve, reject) {
