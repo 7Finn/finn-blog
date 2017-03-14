@@ -15,6 +15,7 @@ module.exports = function(db) {
 
   app.use(history());
   app.use(logger('dev'));
+  app.use(favicon(path.join(__dirname, '/src/assets/img', 'favicon.ico')));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());

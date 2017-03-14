@@ -55,8 +55,9 @@ module.exports = function(db) {
       });
   });
 
-  router.get('/detail/:id', function(req, res, next) {
-    let id = req.params.id;
+  router.get('/detail', function(req, res, next) {
+    let id = req.query.id;
+    if (!id) res.json(false);
     articlesModel.getArticle(id)
       .then(data => {
         data.date = data.date.toLocaleString();
@@ -88,7 +89,7 @@ module.exports = function(db) {
 
   router.get('/category', function(req, res, next) {
     var name = req.query.name;
-    if (name == '') res.json(err);
+    if (name == '') res.json(false);
     tagsModel.getTagByName(name)
       .then(articlesModel.getArticlesByTag)
       .then(data => {

@@ -31,14 +31,16 @@ export default {
   },
   mounted: function() {
     // 初始化清空文章列表
-    this.$store.state.articlesLoading = true;
-    this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
-      .then(res => { //success
-        this.$store.state.articlesLoading = false;
-        this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body];
-      }, res=> { //fail
-        console.log("错误返回");
-      });
+    if (this.$store.state.indexArticles.length == 0) {
+      this.$store.state.articlesLoading = true;
+      this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
+        .then(res => { //success
+          this.$store.state.articlesLoading = false;
+          this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body];
+        }, res=> { //fail
+          console.log("错误返回");
+        });
+    }
     // window绑定
     // 绑定scroll
     window.addEventListener("scroll", () => {
@@ -52,7 +54,7 @@ export default {
 
       if (scrollTop + clientHeight >= scrollHeight) {
         // 主页
-        if (this.$route.name == 'index') {
+        if (this.$route.name == 'index' && this.$store.state.articlesLoading == false) {
           this.$store.state.articlesLoading = true;
           this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
             .then(res => { //success

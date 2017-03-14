@@ -43,6 +43,7 @@ export default {
 
 .smallApp:hover {
   margin-top: -4px;
+  margin-bottom: 4px;
   box-shadow: 4px 4px 4px #ddd;
   transition: all 0.2s;
 }
@@ -53,6 +54,7 @@ export default {
   width: 30%;
   float: left;
   background-size:cover;
+  background-position: center;
 }
 
 

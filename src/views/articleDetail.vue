@@ -23,7 +23,7 @@ export default {
     Information
   },
   beforeCreate: function() {
-    this.$http.get('/api/article/detail/' + this.$route.params['id'])
+    this.$http.get('/api/article/detail?id=' + this.$route.params['id'])
       .then(res => { //success
         this.article = res.body;
       }, res=> { //fail

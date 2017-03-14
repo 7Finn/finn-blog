@@ -3,9 +3,9 @@
     <div class="banner">
       <div class="header">
         <h1>
-          放各种稀奇古怪的东西
+          放各种稀奇古怪的东西，也许是个组件，也许是个游戏，也许有的时候单纯放个图(｡･ω･｡)ﾉ♡
         </h1>
-        <small>暂时只有一个（笑）</small>
+        <p>虽然暂时只有一个（笑）</p>
       </div>
     </div>
     <div class="apps-group">
@@ -45,6 +45,7 @@ export default {
   position: absolute;
   top: 30%;
   left: 20%;
+  width: 60%;
   color: #fff;
 }
 
