@@ -5,7 +5,7 @@
       <TagList></TagList>
     </div>
     <div class="article-list">
-      <FinnArticle v-for="article in this.$store.state.articles" v-bind:article="article"></FinnArticle>
+      <FinnArticle v-for="article in this.$store.state.categoryArticles" v-bind:article="article"></FinnArticle>
     </div>
     <div class="loading" v-if="this.$store.state.articlesLoading">
       <i class="fa fa-clock-o" aria-hidden="true"></i>
@@ -31,11 +31,11 @@ export default {
   },
   mounted: function() {
     this.$store.state.articlesLoading = true;
-    this.$store.state.articles = [];
+    this.$store.state.categoryArticles = [];
     this.$http.get('/api/article/category?name=' + this.$route.params['name'])
       .then(res => { //success
         this.$store.state.articlesLoading = false;
-        this.$store.state.articles = res.body;
+        this.$store.state.categoryArticles = res.body;
       }, res=> { //fail
         console.log("错误返回");
       });

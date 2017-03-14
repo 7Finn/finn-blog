@@ -5,7 +5,7 @@
       <TagList></TagList>
     </div>
     <div class="article-list">
-      <FinnArticle v-for="article in this.$store.state.articles" v-bind:article="article"></FinnArticle>
+      <FinnArticle v-for="article in this.$store.state.indexArticles" v-bind:article="article"></FinnArticle>
     </div>
     <div class="loading" v-if="this.$store.state.articlesLoading">
       <i class="fa fa-clock-o" aria-hidden="true"></i>
@@ -32,11 +32,10 @@ export default {
   mounted: function() {
     // 初始化清空文章列表
     this.$store.state.articlesLoading = true;
-    this.$store.state.articles = [];
-    this.$http.get('/api/article/getArticles?start=' + this.$store.state.articles.length)
+    this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
       .then(res => { //success
         this.$store.state.articlesLoading = false;
-        this.$store.state.articles = [...this.$store.state.articles, ...res.body];
+        this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body];
       }, res=> { //fail
         console.log("错误返回");
       });
@@ -55,10 +54,10 @@ export default {
         // 主页
         if (this.$route.name == 'index') {
           this.$store.state.articlesLoading = true;
-          this.$http.get('/api/article/getArticles?start=' + this.$store.state.articles.length)
+          this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
             .then(res => { //success
               this.$store.state.articlesLoading = false;
-              this.$store.state.articles = [...this.$store.state.articles, ...res.body];
+              this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body];
             }, res=> { //fail
               console.log("错误返回");
             });

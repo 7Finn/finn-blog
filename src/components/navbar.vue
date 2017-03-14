@@ -8,7 +8,6 @@
         <router-link to='/manager' class="nav-item">管理</router-link>
         <a @click='logout' class="nav-item nav-item-link">退出登录</a>
       </span>
-      <router-link to='/login' class="nav-item" v-else>登录</router-link>
     </ul>
   </nav>
 </template>
