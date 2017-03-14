@@ -4,6 +4,16 @@ pre {
   padding: 16px;
   overflow: auto;
 }
+
+.article h1 {
+  margin: 10px 80px 20px 0;
+  word-wrap: break-word;
+}
+
+.marked-html {
+  overflow: auto;
+}
+
 .article {
   border-radius: 2px;
   background-color: #fff;
@@ -14,8 +24,8 @@ pre {
 }
 
 .article-list .article:hover {
-  margin-left: -2px;
-  margin-right: 2px;
+  margin-left: -4px;
+  margin-right: 4px;
   box-shadow: 3px 3px 3px #ddd;
   transition: all 0.2s;
 }

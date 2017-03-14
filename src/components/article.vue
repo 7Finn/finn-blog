@@ -1,7 +1,7 @@
 <template>
   <article class="article">
     <h1><router-link v-bind:to='articleURL'>{{ article.title }}</router-link></h1>
-    <div v-html="compiledMarkdown" id="marked-html"></div>
+    <div v-html="compiledMarkdown" class="marked-html"></div>
     <hr />
     <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
     <span class="article-pv"><i class="fa fa-eye" aria-hidden="true"></i>  {{ article.pv }}次阅读 </span>
@@ -35,6 +35,6 @@ export default {
 
 <style>
 
-@import '../assets/css/article.css'
+@import '../assets/css/article.css';
 
 </style>
