@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development node bin/www"
+    "start": "cross-env NODE_ENV=development node bin/www",
+    "build": "node build/build.js",
+    "prod":"cross-env NODE_ENV=production node bin/www"
   },
   "devDependencies": {
     "babel-core": "^6.20.0",
@@ -16,6 +18,8 @@
     "css-loader": "^0.26.1",
     "file-loader": "^0.10.1",
     "html-webpack-plugin": "^2.24.1",
+    "ora": "^1.1.0",
+    "shelljs": "^0.7.7",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^10.0.2",
     "vue-template-compiler": "^2.1.6",
