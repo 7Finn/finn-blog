@@ -21,6 +21,7 @@ pre {
   padding: 20px;
   margin-bottom: 20px;
   transition: all 0.2s;
+  overflow: auto;
 }
 
 .article-list .article:hover {

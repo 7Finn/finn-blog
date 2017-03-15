@@ -15,6 +15,9 @@
       <i class="fa fa-clock-o" aria-hidden="true"></i>
       <span>加载中</span>
     </div>
+    <div class="article-over" v-if="this.$store.state.indexOver">
+      <span>已经到底啦</span>
+    </div>
   </div>
 </template>
 
@@ -60,11 +63,17 @@ export default {
 
       if (scrollTop + clientHeight >= scrollHeight) {
         // 主页
+        if (this.$route.name == 'index' && this.$store.state.indexOver) return;
         if (this.$route.name == 'index' && this.$store.state.articlesLoading == false) {
           this.$store.state.articlesLoading = true;
           this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
             .then(res => { //success
               this.$store.state.articlesLoading = false;
+              // 如果已经没有文章了
+              if (res.body.length == 0) {
+                this.$store.state.indexOver = true;
+                return;
+              }
               this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body];
             }, res=> { //fail
               console.log("错误返回");
@@ -113,6 +122,11 @@ footer {
 }
 
 .loading {
+  margin-right: 220px;
+  text-align: center;
+}
+
+.article-over {
   margin-right: 220px;
   text-align: center;
 }

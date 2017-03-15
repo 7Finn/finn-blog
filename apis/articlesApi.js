@@ -61,14 +61,13 @@ module.exports = function(db) {
 
   router.get('/detail', function(req, res, next) {
     let id = req.query.id;
-    if (!id) res.json(false);
     articlesModel.getArticle(id)
       .then(data => {
         data.date = data.date.toLocaleString();
         res.json(data);
       })
       .catch(err => {
-        next(err);
+        res.json(err);
       })
   });
 
