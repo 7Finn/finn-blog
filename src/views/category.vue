@@ -37,7 +37,7 @@ export default {
         this.$store.state.articlesLoading = false;
         this.$store.state.categoryArticles = res.body;
       }, res=> { //fail
-        console.log("错误返回");
+        this.$router.push('/404');
       });
   }
 }

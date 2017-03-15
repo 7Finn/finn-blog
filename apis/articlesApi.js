@@ -6,7 +6,7 @@ module.exports = function(db) {
   var tagsModel = require('../models/tagsModel')(db);
   var usersModel = require('../models/usersModel')(db);
 
-  router.get('/getArticles', function(req, res) {
+  router.get('/getArticles', function(req, res, next) {
     let start = req.query.start;
     articlesModel.getArticlesFrom(start, 5) // 一次拿5篇
       .then(data => {
@@ -29,8 +29,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        console.log(err);
-        res.json(err);
+        next(err);
       });
   });
 
@@ -40,19 +39,24 @@ module.exports = function(db) {
     article.date = date;
     article.lastModifyDate = date;
     // 验证权限
-    usersModel.isManager(req.session.user.username)
-      .then(data => {
-        return articlesModel.addArticle(article);
-      })
-      .then(data => {
-        tagsModel.addTags(article.tags, data.insertedIds[1]);
-      })
-      .then(data => {
-        res.json(true);
-      })
-      .catch(err => {
-        res.json(err);
-      });
+    if (req.session.user) {
+      usersModel.isManager(req.session.user.username)
+        .then(data => {
+          return articlesModel.addArticle(article);
+        })
+        .then(data => {
+          return tagsModel.addTags(article.tags, data.insertedIds[1]);
+        })
+        .then(data => {
+          res.json(true);
+        })
+        .catch(err => {
+          console.log(err);
+          next();
+        });
+    } else {
+      res.json(false);
+    }
   });
 
   router.get('/detail', function(req, res, next) {
@@ -64,7 +68,7 @@ module.exports = function(db) {
         res.json(data);
       })
       .catch(err => {
-        res.json(err);
+        next(err);
       })
   });
 
@@ -83,7 +87,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        res.json(err);
+        next(err);
       })
   });
 
@@ -112,7 +116,7 @@ module.exports = function(db) {
         });
       })
       .catch(err => {
-        res.json(err);
+        next(err);
       });
   });
 

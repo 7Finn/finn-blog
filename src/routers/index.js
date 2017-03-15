@@ -10,6 +10,7 @@ import Editor from '../views/editor'
 import ArticleDetail from '../views/articleDetail'
 import Category from '../views/category'
 import SmallApps from '../views/smallApps'
+import NotFound from '../views/notFound'
 
 const routes = [{
     name: 'index',
@@ -44,6 +45,9 @@ const routes = [{
   }, {
     path: '/smallapps',
     component: SmallApps
+  },  {
+    path: '*',
+    component: NotFound
   }
 ];
 

@@ -30,7 +30,7 @@ export default {
       .then(res => { //success
         this.article = res.body;
       }, res=> { //fail
-        console.log("错误返回");
+        this.$router.push('/404');
       });
   },
   methods: {

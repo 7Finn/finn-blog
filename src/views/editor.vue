@@ -56,8 +56,9 @@ export default {
       }
       this.$http.post('/api/article/add', article)
         .then(res => { // success
-          alert("发表成功");
-          this.$router.push('/manager');
+          if (res.body) {
+            this.$router.push('/manager');
+          }
         }, res => { //fail
           console.log("发表失败");
         })

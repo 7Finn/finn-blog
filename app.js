@@ -67,7 +67,7 @@ module.exports = function(db) {
 
     // render the error page
     res.status(err.status || 500);
-    // res.json(err);
+    res.json(err);
   });
 
   return app;
