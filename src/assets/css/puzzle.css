@@ -7,9 +7,7 @@
   height: 600px;
   background-color: #fff;
   border-radius: 2px;
-  -moz-box-shadow: 1px -1px 1px #d4d8d9 inset, 1px 1px 1px 1px #e3e3e3;
-  -webkit-box-shadow: 1px -1px 1px #d4d8d9 inset, 1px 1px 1px 1px #e3e3e3;
-  box-shadow: 1px -1px 1px #d4d8d9 inset, 1px 1px 1px 1px #e3e3e3;
+  box-shadow: 1px 1px 1px #ddd;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
