@@ -1,6 +1,6 @@
 <template>
   <article class="article">
-    <h1><router-link v-bind:to='articleURL'>{{ article.title }}</router-link></h1>
+    <h1><a class="article-link" @click="pushUrl" >{{ article.title }}</a></h1>
     <div v-html="compiledMarkdown" class="marked-html"></div>
     <hr />
     <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
@@ -21,13 +21,16 @@ export default {
     }
   },
   computed: {
-    articleURL: function() {
-      return '/article/detail/' + this.article.id;
-    },
     compiledMarkdown: function () {
       return marked(this.article.content, { sanitize: true })
     }
   },
+  methods: {
+    pushUrl: function() {
+      this.article.pv++;
+      this.$router.push('/article/detail/' + this.article.id);
+    }
+  }
 
 }
 </script>

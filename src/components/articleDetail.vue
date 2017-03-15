@@ -2,11 +2,13 @@
   <article class="article" v-if="article">
     <router-link class="back-btn" to="/" ><i class="fa fa-reply" aria-hidden="true"></i>   返回</router-link>
     <h1>{{ article.title }}</h1>
-    <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
-    <span class="article-pv"><i class="fa fa-eye" aria-hidden="true"></i>  {{ article.pv }}次阅读 </span>
-    <span class="tags-group">
-      <a v-for="tag in article.tags"> {{ tag }} </a>
-    </span>
+    <div class="article-info">
+      <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
+      <span class="article-pv"><i class="fa fa-eye" aria-hidden="true"></i>  {{ article.pv }}次阅读 </span>
+      <span class="tags-group">
+        <a v-for="tag in article.tags"> {{ tag }} </a>
+      </span>
+    </div>
     <hr />
     <div v-html="compiledMarkdown" class="marked-html"></div>
   </article>
@@ -32,6 +34,10 @@ export default {
 
 
 <style>
+
+.article-info {
+  
+}
 
 .back-btn {
   float: right;

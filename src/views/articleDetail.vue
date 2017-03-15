@@ -28,8 +28,14 @@ export default {
   beforeCreate: function() {
     this.$http.get('/api/article/detail?id=' + this.$route.params['id'])
       .then(res => { //success
-        this.article = res.body;
+        if (!res.body.err) {
+          this.article = res.body.data;
+        } else {
+          console.log(res.body.data);
+          this.$router.push('/404');
+        }
       }, res=> { //fail
+        console.log(res.body.data);
         this.$router.push('/404');
       });
   },

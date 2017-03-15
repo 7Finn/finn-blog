@@ -63,11 +63,17 @@ module.exports = function(db) {
     let id = req.query.id;
     articlesModel.getArticle(id)
       .then(data => {
-        data.date = data.date.toLocaleString();
-        res.json(data);
+        if (data[1]) {
+          data[1].pv++;
+          data[1].date = data[1].date.toLocaleString();
+          res.jsonSend(data[1]);
+        } else {
+          res.jsonError("找不到当前文章");
+        }
       })
       .catch(err => {
-        res.json(false);
+        console.log(err.message);
+        res.jsonError(err.message);
       })
   });
 

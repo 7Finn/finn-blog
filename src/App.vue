@@ -56,6 +56,7 @@ a {
   width: 70%;
   margin: 0 auto;
   padding-bottom: 40px;
+  min-width: 700px;
 }
 
 

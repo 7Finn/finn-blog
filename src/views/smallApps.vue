@@ -11,7 +11,7 @@
     <div class="apps-group">
       <SmallApp imgUrl="../../assets/img/1.jpg" name="拼图游戏"
         url="/puzzle"
-        introduce="原生Javascript+html+css，好像是Web2.0课程的第四个作业，15年的作品，有简单和困难可选，可自动还原。">
+        introduce="原生Javascript+html+css，好像是Web2.0课程上的第四个作业，15年的作品，有简单和困难可选，可自动复原。">
         </SmallApp>
     </div>
   </div>

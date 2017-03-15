@@ -18,8 +18,9 @@ module.exports = function(db) {
 			});
 		},
     getArticle: function(id) {
-			articles.updateOne({_id:ObjectID(id)}, {$inc:{pv:1}}); //自增长一点访问
-      return articles.findOne({_id:ObjectID(id)});
+			let p1 = articles.updateOne({_id:ObjectID(id)}, {$inc:{pv:1}}); //自增长一点访问
+			let p2 = articles.findOne({_id:ObjectID(id)});
+			return Promise.all([p1, p2]);
     },
 		getArticlesByTag: function(tag) {
 			return articles.find({tags: tag.name}).sort({date:-1});

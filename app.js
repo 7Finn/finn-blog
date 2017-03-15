@@ -8,11 +8,12 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
+var JsonUtil = require('./models/jsonUtil');
+
 
 module.exports = function(db) {
   // 创建一个express实例
   var app = express();
-
   app.use(history());
   app.use(logger('dev'));
   app.use(favicon(path.join(__dirname, '/src/assets/img', 'favicon.ico')));
@@ -48,9 +49,11 @@ module.exports = function(db) {
 
   var usersApi = require('./apis/usersApi')(db);
   var articlesApi = require('./apis/articlesApi')(db);
-
+  app.use(JsonUtil());
   app.use('/api', usersApi);
   app.use('/api/article', articlesApi);
+
+
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -66,8 +69,8 @@ module.exports = function(db) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
-    res.status(err.status || 500);
-    res.json(err);
+    // res.status(err.status || 500);
+    res.jsonError("找不到当前相关信息");
   });
 
   return app;
