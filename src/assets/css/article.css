@@ -5,6 +5,12 @@ pre {
   overflow: auto;
 }
 
+blockquote {
+  padding: 1px 20px;
+  border-left: 8px solid #ddd;
+  margin: 0;
+}
+
 .article h1 {
   margin: 10px 80px 20px 0;
   word-wrap: break-word;

@@ -93,7 +93,6 @@ module.exports = function(db) {
           })
         }, function(err) {
           res.jsonSend(tags);
-
         });
       })
       .catch(err => {

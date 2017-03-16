@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node bin/www",
     "build": "node build/build.js",
-    "prod":"cross-env NODE_ENV=production node bin/www"
+    "prod": "cross-env NODE_ENV=production node bin/www"
   },
   "devDependencies": {
     "babel-core": "^6.20.0",
