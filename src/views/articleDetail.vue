@@ -2,33 +2,39 @@
   <div>
     <div class="right">
       <Information id="information"></Information>
-      <button @click="backTop" class="back-top" v-if="this.$store.state.scrollTop > 300">
-        <i class="fa fa-arrow-up" aria-hidden="true"></i>
-        返回顶部
-      </button>
+      <BackTop></BackTop>
     </div>
     <ArticleDetail class="article-detail" v-bind:article="article"></ArticleDetail>
+    <div class="loading" v-if="this.loading">
+      <i class="fa fa-clock-o" aria-hidden="true"></i>
+      <span>加载中</span>
+    </div>
   </div>
 </template>
 
 <script>
 import ArticleDetail from '../components/articleDetail'
 import Information from '../components/information'
+import BackTop from '../components/backtop'
 
 export default {
   data: function() {
     return {
-      article: null
+      article: null,
+      loading: false
     }
   },
   components: {
     ArticleDetail,
-    Information
+    Information,
+    BackTop
   },
   mounted: function() {
+    this.loading = true;
     this.$http.get('/api/article/detail?id=' + this.$route.params['id'])
       .then(res => { //success
         if (!res.body.err) {
+          this.loading = false;
           this.article = res.body.data;
         } else {
           console.log(res.body.data);
@@ -38,11 +44,6 @@ export default {
         console.log(res.body.data);
         this.$router.replace('/404');
       });
-  },
-  methods: {
-    backTop: function() {
-      document.body.scrollTop = 0;
-    }
   }
 }
 </script>

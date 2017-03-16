@@ -3,10 +3,7 @@
     <div class="right">
       <Information id="information"></Information>
       <TagList></TagList>
-      <button @click="backTop" class="back-top" v-if="this.$store.state.scrollTop > 300">
-        <i class="fa fa-arrow-up" aria-hidden="true"></i>
-        返回顶部
-      </button>
+      <BackTop></BackTop>
     </div>
     <div class="article-list">
       <FinnArticle v-for="article in this.$store.state.indexArticles" v-bind:article="article"></FinnArticle>
@@ -16,7 +13,7 @@
       <span>加载中</span>
     </div>
     <div class="article-over" v-if="this.$store.state.indexOver">
-      <span>已经到底啦</span>
+      <hr/><span>已经到底啦</span><hr/>
     </div>
   </div>
 </template>
@@ -25,16 +22,19 @@
 import FinnArticle from '../components/article'
 import Information from '../components/information'
 import TagList from '../components/tagList'
+import BackTop from '../components/backtop'
 
 export default {
   data: function() {
     return {
+      timer: null
     }
   },
   components: {
     FinnArticle,
     Information,
-    TagList
+    TagList,
+    BackTop
   },
   mounted: function() {
     // 初始化清空文章列表
@@ -93,11 +93,6 @@ export default {
           //
         }
     }, false);
-  },
-  methods: {
-    backTop: function() {
-      document.body.scrollTop = 0;
-    }
   }
 }
 </script>
@@ -133,31 +128,25 @@ footer {
 .loading {
   margin-right: 220px;
   text-align: center;
+  color: #969696;
 }
 
 .article-over {
   margin-right: 220px;
   text-align: center;
+  color: #969696;
 }
 
-.back-top {
-  cursor: pointer;
-  position: fixed;
-  right: 20%;
-  height: 40px;
-  bottom: 50px;
-  outline: none;
+.article-over hr {
+  display: inline-block;
+  margin: 0 20px;
+  width: 30%;
   border: none;
-  background-color: rgba(0, 0, 0, 0.1);
-  width: 100px;
-  transition: all 0.2s;
+  border-top: 1px solid #ccc;
+  vertical-align: middle;
 }
 
-.back-top:hover {
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.3);
-  transition: all 0.2s;
-}
+
 
 .loading span {
   margin-left: 10px;
