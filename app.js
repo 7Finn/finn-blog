@@ -69,8 +69,8 @@ module.exports = function(db) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
-    // res.status(err.status || 500);
-    res.jsonError("找不到当前相关信息");
+    res.status(err.status || 500);
+    // res.jsonError("找不到当前相关信息");
   });
 
   return app;

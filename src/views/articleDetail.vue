@@ -25,18 +25,18 @@ export default {
     ArticleDetail,
     Information
   },
-  beforeCreate: function() {
+  mounted: function() {
     this.$http.get('/api/article/detail?id=' + this.$route.params['id'])
       .then(res => { //success
         if (!res.body.err) {
           this.article = res.body.data;
         } else {
           console.log(res.body.data);
-          this.$router.push('/404');
+          this.$router.replace('/404');
         }
       }, res=> { //fail
         console.log(res.body.data);
-        this.$router.push('/404');
+        this.$router.replace('/404');
       });
   },
   methods: {

@@ -25,11 +25,11 @@ module.exports = function(db) {
             tags: article.tags
           });
         }, function(err) {
-          res.json(articles);
+          res.jsonSend(articles);
         });
       })
       .catch(err => {
-        res.json(false);
+        res.jsonError(err);
       });
   });
 
@@ -48,14 +48,15 @@ module.exports = function(db) {
           return tagsModel.addTags(article.tags, data.insertedIds[1]);
         })
         .then(data => {
-          res.json(true);
+          res.jsonSend(data);
         })
         .catch(err => {
           console.log(err);
-          res.json(false);
+          res.jsonError(err);
         });
     } else {
-      res.json(false);
+      console.log(err);
+      res.jsonError(err);
     }
   });
 
@@ -64,23 +65,26 @@ module.exports = function(db) {
     articlesModel.getArticle(id)
       .then(data => {
         if (data[1]) {
-          data[1].pv++;
           data[1].date = data[1].date.toLocaleString();
           res.jsonSend(data[1]);
         } else {
+          console.log("找不到当前文章");
           res.jsonError("找不到当前文章");
         }
+      }, data => {
+        console.log(data);
+        res.jsonError(data);
       })
       .catch(err => {
-        console.log(err.message);
-        res.jsonError(err.message);
+        console.log(err);
+        res.jsonError(err);
       })
   });
 
   router.get('/tags', function(req, res, next) {
     tagsModel.getAllTags()
       .then(data => {
-        let tags = []
+        let tags = [];
         data.forEach(function (tag, i) {
           tags.push({
             id: tag._id,
@@ -88,11 +92,13 @@ module.exports = function(db) {
             articlesId: tag.articlesId
           })
         }, function(err) {
-          res.json(tags);
+          res.jsonSend(tags);
+
         });
       })
       .catch(err => {
-        res.json(false);
+        console.log(err);
+        res.jsonError(err);
       })
   });
 
@@ -117,11 +123,16 @@ module.exports = function(db) {
             tags: article.tags
           });
         }, function(err) {
-          res.json(articles);
+          if (articles.length == 0) {
+            res.jsonError("不存在此Tag");
+          } else {
+            res.jsonSend(articles);
+          }
         });
       })
       .catch(err => {
-        res.json(false);
+        console.log(err);
+        res.jsonError(err);
       });
   });
 

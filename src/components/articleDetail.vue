@@ -1,6 +1,6 @@
 <template>
   <article class="article" v-if="article">
-    <router-link class="back-btn" to="/" ><i class="fa fa-reply" aria-hidden="true"></i>   返回</router-link>
+    <button class="back-btn" @click="back" ><i class="fa fa-reply" aria-hidden="true"></i>   返回</button>
     <h1>{{ article.title }}</h1>
     <div class="article-info">
       <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
@@ -28,6 +28,11 @@ export default {
       return marked(this.article.content, { sanitize: true })
     }
   },
+  methods: {
+    back: function(event) {
+      this.$router.go(-1);
+    }
+  }
 
 }
 </script>
@@ -36,12 +41,13 @@ export default {
 <style>
 
 .article-info {
-  
+
 }
 
 .back-btn {
   float: right;
-  width: 50px;
+  outline: none;
+  border: none;
   text-align: center;
   display: inline-block;
   background-color: #fff;

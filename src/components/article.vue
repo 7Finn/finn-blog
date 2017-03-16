@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     pushUrl: function() {
-      this.article.pv++;
       this.$router.push('/article/detail/' + this.article.id);
     }
   }

@@ -81,14 +81,14 @@ export default {
 
       this.$http.post('/api/login', data)
         .then(res => {  // success
-          if(res.body.user) {
+          if(res.body.data.user) {
             this.$store.state.isManager = true;
             this.$router.push('/');
           } else {
-            if (res.body.error == "用户不存在") {
-              this.usernameWarning = res.body.error + " ×";
-            } else if (res.body.error == "密码错误"){
-              this.passwordWarning = res.body.error + " ×";
+            if (res.body.data.err == "用户不存在") {
+              this.usernameWarning = res.body.data.err + " ×";
+            } else if (res.body.data.err == "密码错误"){
+              this.passwordWarning = res.body.data.err + " ×";
             }
           }
         });

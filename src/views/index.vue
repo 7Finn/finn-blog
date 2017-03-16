@@ -42,8 +42,12 @@ export default {
       this.$store.state.articlesLoading = true;
       this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
         .then(res => { //success
-          this.$store.state.articlesLoading = false;
-          this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body];
+          if (!res.body.err) {
+            this.$store.state.articlesLoading = false;
+            this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body.data];
+          } else {
+            console.log(res.body.data);
+          }
         }, res=> { //fail
           console.log("错误返回");
         });
@@ -68,13 +72,17 @@ export default {
           this.$store.state.articlesLoading = true;
           this.$http.get('/api/article/getArticles?start=' + this.$store.state.indexArticles.length)
             .then(res => { //success
-              this.$store.state.articlesLoading = false;
-              // 如果已经没有文章了
-              if (res.body.length == 0) {
-                this.$store.state.indexOver = true;
-                return;
+              if (!res.body.err) {
+                this.$store.state.articlesLoading = false;
+                // 如果已经没有文章了
+                if (res.body.data.length == 0) {
+                  this.$store.state.indexOver = true;
+                  return;
+                }
+                this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body.data];
+              } else {
+                console.log(res.body.data);
               }
-              this.$store.state.indexArticles = [...this.$store.state.indexArticles, ...res.body];
             }, res=> { //fail
               console.log("错误返回");
             });

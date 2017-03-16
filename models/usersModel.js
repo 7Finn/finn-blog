@@ -14,15 +14,15 @@ module.exports = function(db) {
 				users.findOne({username: username}, function(err, doc) {
 	      	if (doc == null) {
 	      		reject({
-							error: "用户不存在",
+							err: "用户不存在",
 							user: null,
 						});
 	      	} else {
 	      		bcrypt.compare(password, doc.password, function(err, res) {
 	      			if (res) { // 账号密码正确
-								resolve({ error: null, user: doc });
+								resolve({ err: null, user: doc });
 							} else { // 密码错误
-								reject({ error: "密码错误", user: null });
+								reject({ err: "密码错误", user: null });
 							}
 	      		});
 	      	}

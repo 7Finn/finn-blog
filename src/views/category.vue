@@ -30,15 +30,21 @@ export default {
     TagList
   },
   mounted: function() {
-    this.$store.state.articlesLoading = true;
-    this.$store.state.categoryArticles = [];
-    this.$http.get('/api/article/category?name=' + this.$route.params['name'])
-      .then(res => { //success
-        this.$store.state.articlesLoading = false;
-        this.$store.state.categoryArticles = res.body;
-      }, res=> { //fail
-        this.$router.push('/404');
-      });
+    // this.$store.state.articlesLoading = true;
+    // this.$store.state.categoryArticles = [];
+    // this.$http.get('/api/article/category?name=' + this.$route.params['name'])
+    //   .then(res => { //success
+    //     if (!res.body.err) {
+    //       this.$store.state.articlesLoading = false;
+    //       this.$store.state.categoryArticles = res.body.data;
+    //     } else {
+    //       console.log(res.body.data);
+    //       this.$router.push('/404');
+    //     }
+    //   }, res=> { //fail
+    //     console.log(res.body.data);
+    //     this.$router.push('/404');
+    //   });
   }
 }
 </script>

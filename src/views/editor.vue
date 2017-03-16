@@ -37,6 +37,9 @@ export default {
       tags: '',
     }
   },
+  beforeCreate: function() {
+    if (!this.$store.state.isManager) this.$router.replace('/404');
+  },
   computed: {
     compiledMarkdown: function () {
       return marked(this.input, { sanitize: true })
@@ -56,8 +59,10 @@ export default {
       }
       this.$http.post('/api/article/add', article)
         .then(res => { // success
-          if (res.body) {
+          if (!res.body.err) {
             this.$router.push('/manager');
+          } else {
+            console.log("发表时出现了点问题");
           }
         }, res => { //fail
           console.log("发表失败");

@@ -18,7 +18,11 @@ export default {
     if (this.$store.state.tags.length == 0) {
       this.$http.get('/api/article/tags')
         .then(res => { //success
-           this.$store.state.tags = res.body;
+          if (!res.body.err) {
+            this.$store.state.tags = res.body.data;
+          } else {
+            console.log("你请求的什么鬼tag￣△￣");
+          }
         }, res=> { //fail
           console.log("错误返回");
         });
@@ -38,5 +42,8 @@ export default {
   background-color: #fff;
   box-shadow: 1px 1px 1px #ddd;
   padding: 10px;
+}
+
+.tag-list li {
 }
 </style>
