@@ -1,5 +1,6 @@
 <template>
   <div id="index">
+    <h1 class="hide-head"></h1>
     <div class="right">
       <Information id="information"></Information>
       <TagList></TagList>
@@ -144,6 +145,12 @@ footer {
   border: none;
   border-top: 1px solid #ccc;
   vertical-align: middle;
+}
+
+.hide-head {
+  padding-top: 10px;
+  margin: 0;
+  margin-top: -10px;
 }
 
 

@@ -48,7 +48,7 @@ export default {
   box-shadow: 1px 1px 1px #ddd;
   height: 70px;
   padding: 0 10%;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .brand {

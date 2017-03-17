@@ -35,8 +35,8 @@ blockquote {
 }
 
 .article-list .article:hover {
-  margin-left: -4px;
-  margin-right: 4px;
+  margin-top: -4px;
+  margin-bottom: 24px;
   box-shadow: 3px 3px 3px #ddd;
   transition: all 0.2s;
 }
