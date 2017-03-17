@@ -60,9 +60,9 @@ export default {
       // 网页被卷去的高： document.body.scrollTop;
       // 网页正文全文高： document.body.scrollHeight;
       // clientHeight + scrollTop = scrollHeight
-      let scrollTop = document.body.scrollTop;
-      let scrollHeight = document.body.scrollHeight;
-      let clientHeight = document.body.clientHeight;
+      let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+      let scrollHeight = document.body.scrollHeight || document.documentElement.scrollHeight;
+      let clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
 
       this.$store.state.scrollTop = scrollTop;
 
