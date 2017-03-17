@@ -20,6 +20,7 @@ Vue.use(Vuex);
 const VuexStore = new Vuex.Store({
     state: {
         isManager : false,
+        // modalShow: true,
         indexArticles: [],
         categoryArticles: [],
         tags: [],
