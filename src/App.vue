@@ -52,6 +52,7 @@ ul {
 a {
   color: #00B7FF;
   text-decoration: none;
+  cursor: pointer;
 }
 
 #container {

@@ -55,8 +55,8 @@ module.exports = function(db) {
           res.jsonError(err);
         });
     } else {
-      console.log(err);
-      res.jsonError(err);
+      console.log("用户无权限");
+      res.jsonError("用户无权限");
     }
   });
 

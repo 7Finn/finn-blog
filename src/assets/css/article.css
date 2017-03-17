@@ -20,10 +20,6 @@ blockquote {
   overflow: auto;
 }
 
-.article-link {
-  cursor: pointer;
-}
-
 .article {
   border-radius: 2px;
   background-color: #fff;
