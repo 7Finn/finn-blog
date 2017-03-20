@@ -4,8 +4,13 @@
       <Information id="information"></Information>
       <TagList></TagList>
     </div>
+    <h1>分类：{{this.$route.params['name']}}</h1>
     <div class="article-list">
-      <FinnArticle v-for="article in this.$store.state.articles" v-bind:article="article"></FinnArticle>
+      <FinnArticle v-for="article in this.$store.state.categoryArticles" v-bind:article="article"></FinnArticle>
+    </div>
+    <div class="loading" v-if="this.$store.state.articlesLoading">
+      <i class="fa fa-clock-o" aria-hidden="true"></i>
+      <span>加载中</span>
     </div>
   </div>
 </template>
@@ -26,12 +31,19 @@ export default {
     TagList
   },
   mounted: function() {
-    this.$http.get('/api/article/category/' + this.$route.params['name'])
-      .then(res => { //success
-        this.$store.state.articles = res.body;
-      }, res=> { //fail
-        console.log("错误返回");
-      });
+    if (this.$store.state.categoryArticles.length == 0) {
+      this.$http.get('/api/article/category?name=' + this.$route.params['name'])
+        .then(res => { //success
+          if (!res.body.err) {
+            this.$store.state.categoryArticles = res.body.data;
+          } else {
+            this.$router.replace('/404');
+          }
+        }, res=> { //fail
+          console.log("错误返回");
+          this.$router.replace('/404');
+        });
+    }
   }
 }
 </script>

@@ -1,14 +1,15 @@
 <template>
   <nav id="navbar" class="nav">
     <router-link to='/' class="brand">Finn</router-link>
-    <ul class="nav-right">
-      <router-link to='/' class="nav-item">主页</router-link>
-      <router-link to='/puzzle' class="nav-item">迷宫小游戏</router-link>
-      <span class="" v-if="this.$store.state.isManager">
+    <ul class="nav-list">
+      <li><router-link to='/' class="nav-item">主页</router-link></li>
+      <li><router-link to='/smallapps' class="nav-item">小应用</router-link></li>
+      <li v-if="this.$store.state.isManager">
         <router-link to='/manager' class="nav-item">管理</router-link>
+      </li>
+      <li v-if="this.$store.state.isManager">
         <a @click='logout' class="nav-item nav-item-link">退出登录</a>
-      </span>
-      <router-link to='/login' class="nav-item" v-else>登录</router-link>
+      </li>
     </ul>
   </nav>
 </template>
@@ -20,10 +21,11 @@ export default {
     return {
     }
   },
-  mounted: function() {
+  beforeCreate: function() {
     this.$http.get('/api/user')
       .then(res => {  // success
-        if(res.body.username) {
+        if(res.body.data.username) {
+          // 这里直接就判断管理员了，因为只有一个账号（笑）
           this.$store.state.isManager = true;
         } else {
           // this.$router.push('/');
@@ -48,7 +50,11 @@ export default {
   box-shadow: 1px 1px 1px #ddd;
   height: 70px;
   padding: 0 10%;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+}
+
+.nav li {
+  display: inline-block;
 }
 
 .brand {
@@ -62,19 +68,19 @@ export default {
   vertical-align: middle
 }
 
-.nav-right {
+.nav-list {
   float: right;
   height: inherit;
 }
 
 .nav-item {
   line-height: 70px;
-  display: inline-block;
   margin: 0 10px;
 }
 
 .nav-item-link {
   cursor: pointer;
 }
+
 
 </style>

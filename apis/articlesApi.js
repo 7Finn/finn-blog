@@ -6,8 +6,9 @@ module.exports = function(db) {
   var tagsModel = require('../models/tagsModel')(db);
   var usersModel = require('../models/usersModel')(db);
 
-  router.get('/getall', function(req, res) {
-    articlesModel.getAll()
+  router.get('/getArticles', function(req, res, next) {
+    let start = req.query.start;
+    articlesModel.getArticlesFrom(start, 5) // 一次拿5篇
       .then(data => {
         let articles = [];
         data.forEach(function (article, i) {
@@ -24,11 +25,11 @@ module.exports = function(db) {
             tags: article.tags
           });
         }, function(err) {
-          res.json(articles);
+          res.jsonSend(articles);
         });
       })
       .catch(err => {
-        res.json(err);
+        res.jsonError(err);
       });
   });
 
@@ -38,35 +39,64 @@ module.exports = function(db) {
     article.date = date;
     article.lastModifyDate = date;
     // 验证权限
-    usersModel.isManager(req.session.user.username)
-      .then(articlesModel.addArticle(article))
-      .then(data => {
-        tagsModel.addTags(article.tags, data.insertedIds[1]);
-      })
-      .then(data => {
-        res.json(true);
-      })
-      .catch(err => {
-        res.json(err);
-      });
+    if (req.session.user) {
+      usersModel.isManager(req.session.user.username)
+        .then(data => {
+          return articlesModel.addArticle(article);
+        })
+        .then(data => {
+          return tagsModel.addTags(article.tags, data.insertedIds[1]);
+        })
+        .then(data => {
+          res.jsonSend(data);
+        })
+        .catch(err => {
+          console.log(err);
+          res.jsonError(err);
+        });
+    } else {
+      console.log("用户无权限");
+      res.jsonError("用户无权限");
+    }
   });
 
-  router.get('/detail/:id', function(req, res, next) {
-    let id = req.params.id;
-    articlesModel.getArticle(id)
+  router.post('/update', function(req, res, next) {
+    let article = req.body;
+    let id = req.query.id;
+    articlesModel.updateArticle(id, article)
       .then(data => {
-        data.date = data.date.toLocaleString();
-        res.json(data);
+        res.jsonSend("更新成功");
       })
       .catch(err => {
-        res.json(err);
+        res.jsonError("更新错误");
+      })
+  });
+
+  router.get('/detail', function(req, res, next) {
+    let id = req.query.id;
+    articlesModel.getArticle(id)
+      .then(data => {
+        if (data[1]) {
+          data[1].date = data[1].date.toLocaleString();
+          res.jsonSend(data[1]);
+        } else {
+          console.log("找不到当前文章");
+          res.jsonError("找不到当前文章");
+        }
+      }, data => {
+        console.log(data);
+        res.jsonError(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.jsonError(err);
       })
   });
 
   router.get('/tags', function(req, res, next) {
     tagsModel.getAllTags()
       .then(data => {
-        let tags = []
+        let tags = [];
         data.forEach(function (tag, i) {
           tags.push({
             id: tag._id,
@@ -74,16 +104,18 @@ module.exports = function(db) {
             articlesId: tag.articlesId
           })
         }, function(err) {
-          res.json(tags);
+          res.jsonSend(tags);
         });
       })
       .catch(err => {
-        res.json(err);
+        console.log(err);
+        res.jsonError(err);
       })
   });
 
-  router.get('/category/:name', function(req, res, next) {
-    var name = req.params.name;
+  router.get('/category', function(req, res, next) {
+    var name = req.query.name;
+    if (name == '') res.json(false);
     tagsModel.getTagByName(name)
       .then(articlesModel.getArticlesByTag)
       .then(data => {
@@ -102,11 +134,16 @@ module.exports = function(db) {
             tags: article.tags
           });
         }, function(err) {
-          res.json(articles);
+          if (articles.length == 0) {
+            res.jsonError("不存在此Tag");
+          } else {
+            res.jsonSend(articles);
+          }
         });
       })
       .catch(err => {
-        res.json(err);
+        console.log(err);
+        res.jsonError(err);
       });
   });
 

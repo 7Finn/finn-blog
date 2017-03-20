@@ -16,11 +16,16 @@ export default {
   },
   methods: {
     setCategory: function() {
-      this.$http.get('/api/article/category/' + this.tag.name)
+      this.$http.get('/api/article/category?name=' + this.tag.name)
         .then(res => { //success
-          this.$store.state.articles = res.body;
+          if (!res.body.err) {
+            this.$store.state.categoryArticles = res.body.data;
+          } else {
+            this.$router.replace('/404');
+          }
         }, res=> { //fail
           console.log("错误返回");
+          this.$router.replace('/404');
         });
     }
   }

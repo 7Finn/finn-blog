@@ -6,11 +6,11 @@ module.exports = function(db) {
 
   router.get('/user', function(req, res) {
     if (req.session.user) {
-        res.json({
+        res.jsonSend({
             username : req.session.user.username
         })
     } else {
-        res.json({
+        res.jsonSend({
             username : null
         })
     }
@@ -20,10 +20,10 @@ module.exports = function(db) {
     userModel.findUser(req.body.username, req.body.password)
       .then(data => {
         req.session.user = data.user;
-        res.json(data);
+        res.jsonSend(data);
       })
       .catch(err => {
-        res.json(err);
+        res.jsonError(err);
       })
   });
 
@@ -31,16 +31,16 @@ module.exports = function(db) {
     var user = req.body;
     userModel.addUser(user)
       .then(data => {
-        if (data) res.json(true);
+        if (data) res.jsonSend(true);
       })
       .catch(err => {
-        res.json(err);
+        res.jsonError(err);
       });
   });
 
   router.get('/logout', function(req, res, next) {
     delete req.session.user;
-    res.json(true);
+    res.jsonSend(true);
   });
 
   return router;

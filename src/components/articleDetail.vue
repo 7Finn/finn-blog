@@ -1,13 +1,16 @@
 <template>
   <article class="article" v-if="article">
+    <button class="back-btn" @click="back" ><i class="fa fa-reply" aria-hidden="true"></i>   返回</button>
     <h1>{{ article.title }}</h1>
-    <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
-    <span class="article-pv"><i class="fa fa-eye" aria-hidden="true"></i>  {{ article.pv }}次阅读 </span>
-    <span class="tags-group">
-      <a v-for="tag in article.tags"> {{ tag }} </a>
-    </span>
+    <div class="article-info">
+      <span class="article-date"><i class="fa fa-calendar" aria-hidden="true"></i>  {{ article.date }}</span>
+      <span class="article-pv"><i class="fa fa-eye" aria-hidden="true"></i>  {{ article.pv }}次阅读 </span>
+      <span class="tags-group">
+        <a v-for="tag in article.tags" @click="toTag"> {{ tag }} </a>
+      </span>
+    </div>
     <hr />
-    <div v-html="compiledMarkdown" id="marked-html"></div>
+    <div v-html="compiledMarkdown" class="marked-html"></div>
   </article>
 </template>
 
@@ -25,57 +28,58 @@ export default {
       return marked(this.article.content, { sanitize: true })
     }
   },
+  methods: {
+    back: function(event) {
+      this.$router.go(-1);
+    },
+    toTag: function(event) {
+      let category = event.target.innerHTML.trim();
+      this.$router.push('/category/' + category);
+      this.$http.get('/api/article/category?name=' + category)
+        .then(res => { //success
+          if (!res.body.err) {
+            this.$store.state.categoryArticles = res.body.data;
+          } else {
+            this.$router.replace('/404');
+          }
+        }, res=> { //fail
+          console.log("错误返回");
+          this.$router.replace('/404');
+        });
+    }
+  }
 
 }
 </script>
 
 
 <style>
-.article {
-  border-radius: 2px;
-  background-color: #fff;
-  box-shadow: 1px 1px 1px #ddd;
-  padding: 20px;
-  margin-bottom: 20px;
+
+.article-info {
+
 }
 
-.article hr {
-  border: none;
-  margin-bottom: 15px;
-  border-top: 1px solid #ddd;
-}
-
-.article .article-date {
-  color: #a0a0a0;
-  font-size: 15px;
-}
-
-.article .article-pv {
-  margin-left: 20px;
-  color: #a0a0a0;
-  font-size: 15px;
-}
-
-.article .tags-group {
+.back-btn {
   float: right;
-}
-
-.article .tags-group a {
-  cursor: pointer;
-  padding: 0 6px;
-  height: 20px;
-  line-height: 20px;
-  font-size: 12px;
-  text-decoration: none;
-  color: #017e66;
-  background-color: rgba(1,126,102,.08);
+  outline: none;
+  border: none;
   text-align: center;
   display: inline-block;
-  margin-left: 10px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 10px;
+  color: #6d6d6d;
+  transition: all 0.2s;
 }
 
-.article .tags-group a:hover {
-  background-color: #017e66;
+.back-btn:hover {
+  background-color: #b5b5b5;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.back-btn:active {
+  background-color: #6d6d6d;
   color: #fff;
 }
 

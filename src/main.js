@@ -15,11 +15,18 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(Vuex);
 
+
 // 应用级状态
 const VuexStore = new Vuex.Store({
     state: {
         isManager : false,
-        articles: []
+        // modalShow: true,
+        indexArticles: [],
+        categoryArticles: [],
+        tags: [],
+        scrollTop: 0,
+        indexOver: false,
+        articlesLoading: false
     },
     mutations: {
     }

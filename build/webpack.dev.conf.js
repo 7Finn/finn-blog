@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var webPackBaseConf = require('./webpack.config');
+var webPackBaseConf = require('./webpack.base.conf');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var merge = require('webpack-merge');
 var hotClient = './build/hot-client';

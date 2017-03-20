@@ -1,15 +1,18 @@
 <template>
-  <div>
+  <div id="outer">
+    <!-- <Modal></Modal> -->
     <Navbar></Navbar>
     <div id="container">
       <router-view class="router"></router-view>
     </div>
+    <footer>©2017 吴其锋. All rights reserved.</footer>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import Navbar from './components/navbar.vue'
+import Navbar from './components/navbar'
+// import Modal from './components/modal'
 export default {
   name: 'app',
   data () {
@@ -34,6 +37,12 @@ body {
   background-color: #eaeaea;
 }
 
+#outer {
+  position: relative;
+  height: auto;
+  min-height: 100%;
+}
+
 ul {
   list-style: none;
   margin: 0;
@@ -43,12 +52,14 @@ ul {
 a {
   color: #00B7FF;
   text-decoration: none;
+  cursor: pointer;
 }
 
 #container {
   width: 70%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  min-width: 700px;
 }
 
 

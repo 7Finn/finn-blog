@@ -1,0 +1,78 @@
+pre {
+  background-color: #f6f8fa;
+  border-radius: 2px;
+  padding: 16px;
+  overflow: auto;
+}
+
+blockquote {
+  padding: 1px 20px;
+  border-left: 8px solid #ddd;
+  margin: 0;
+}
+
+.article h1 {
+  margin: 10px 80px 20px 0;
+  word-wrap: break-word;
+}
+
+.marked-html {
+  overflow: auto;
+}
+
+.article {
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 1px 1px 1px #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.2s;
+  overflow: auto;
+}
+
+.article-list .article:hover {
+  margin-top: -4px;
+  margin-bottom: 24px;
+  box-shadow: 3px 3px 3px #ddd;
+  transition: all 0.2s;
+}
+
+.article hr {
+  border: none;
+  margin-bottom: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.article .article-date {
+  color: #a0a0a0;
+  font-size: 15px;
+}
+
+.article .article-pv {
+  margin-left: 20px;
+  color: #a0a0a0;
+  font-size: 15px;
+}
+
+.article .tags-group {
+  float: right;
+}
+
+.article .tags-group a {
+  cursor: pointer;
+  padding: 0 6px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #017e66;
+  background-color: rgba(1,126,102,.08);
+  text-align: center;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.article .tags-group a:hover {
+  background-color: #017e66;
+  color: #fff;
+}
