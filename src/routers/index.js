@@ -6,7 +6,8 @@ import Register from '../views/register'
 import Manager from '../views/manager'
 import ManagerBlogs from '../views/managerBlogs'
 import ManagerTags from '../views/managerTags'
-import Editor from '../views/editor'
+import WriteEditor from '../views/editors/write'
+import UpdateEditor from '../views/editors/update'
 import ArticleDetail from '../views/articleDetail'
 import Category from '../views/category'
 import SmallApps from '../views/smallApps'
@@ -33,8 +34,11 @@ const routes = [{
       { path: '/manager/tags', component: ManagerTags}
     ]
   }, {
-    path: '/editor',
-    component: Editor
+    path: '/article/write',
+    component: WriteEditor
+  }, {
+    path: '/article/update/:id',
+    component: UpdateEditor
   }, {
     path: '/article/detail/:id',
     component: ArticleDetail

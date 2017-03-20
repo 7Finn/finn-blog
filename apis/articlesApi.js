@@ -60,6 +60,18 @@ module.exports = function(db) {
     }
   });
 
+  router.post('/update', function(req, res, next) {
+    let article = req.body;
+    let id = req.query.id;
+    articlesModel.updateArticle(id, article)
+      .then(data => {
+        res.jsonSend("更新成功");
+      })
+      .catch(err => {
+        res.jsonError("更新错误");
+      })
+  });
+
   router.get('/detail', function(req, res, next) {
     let id = req.query.id;
     articlesModel.getArticle(id)

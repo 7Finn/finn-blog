@@ -1,12 +1,14 @@
 <template>
-  <div id="editor" v-if="this.$store.state.isManager">
+  <div id="editor">
     <input v-model="title" class="title" placeholder="标题"/>
-    <input v-model="tags" class="tags" placeholder="标签，用;分隔"/>
+    <input v-model="tags" class="tags" placeholder="标签，用;分隔" v-if="!articleId"/>
     <div class="mark-area">
       <textarea class="marked-mk" :value="input" @input="update" ></textarea>
       <div class="marked-html" v-html="compiledMarkdown" ></div>
     </div>
-    <button type="button" name="button" class="post" @click='submit'>发表博客</button>
+    <slot name="btn"></slot>
+    <button type="button" name="button" class="post" @click='updateArticle' v-if="articleId">更新博客</button>
+    <button type="button" name="button" class="post" @click='submitArticle' v-else>发表博客</button>
   </div>
 </template>
 
@@ -30,6 +32,7 @@ marked.setOptions({
 
 
 export default {
+  props: ['articleId'],
   data: function() {
     return {
       input: '# hello',
@@ -40,6 +43,17 @@ export default {
   beforeCreate: function() {
     if (!this.$store.state.isManager) this.$router.replace('/404');
   },
+  mounted: function() {
+    if (this.articleId) {
+      this.$http.get("/api/article/detail?id=" + this.articleId)
+        .then(res => {
+          if (!res.body.err) {
+            this.input = res.body.data.content;
+            this.title = res.body.data.title;
+          }
+        })
+    }
+  },
   computed: {
     compiledMarkdown: function () {
       return marked(this.input, { sanitize: true })
@@ -49,7 +63,7 @@ export default {
     update: _.debounce(function (e) {
       this.input = e.target.value;
     }, 300),
-    submit: function() {
+    submitArticle: function() {
       let date = new Date();
       let article = {
         title: this.title,
@@ -60,12 +74,30 @@ export default {
       this.$http.post('/api/article/add', article)
         .then(res => { // success
           if (!res.body.err) {
+            console.log("发表成功");
             this.$router.push('/manager');
           } else {
             console.log("发表时出现了点问题");
           }
         }, res => { //fail
           console.log("发表失败");
+        })
+    },
+    updateArticle: function() {
+      let article = {
+        title: this.title,
+        content: this.input,
+      }
+      this.$http.post('/api/article/update?id='+this.articleId, article)
+        .then(res => { // success
+          if (!res.body.err) {
+            console.log("更新成功");
+            this.$router.push('/manager');
+          } else {
+            console.log("更新时出现了点问题");
+          }
+        }, res => { //fail
+          console.log("更新失败");
         })
     }
   }

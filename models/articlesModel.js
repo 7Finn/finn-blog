@@ -32,8 +32,13 @@ module.exports = function(db) {
     deleteArticle: function(id) {
       return articles.remove({_id:ObjectID(id)});
     },
-    updateArticle: function(id, data) {
-      return articles.updateOne({_id:ObjectID(id)}, {$set:{title:data.title, text:data.text}});
+    updateArticle: function(id, article) {
+			if (ObjectID.isValid(id)) {
+				if (!article.title || !article.content) return Promise.reject("内容不可为空");
+				return articles.updateOne({_id:ObjectID(id)}, {$set:{title:article.title, content:article.content, lastModifyDate: new Date()}});
+			} else {
+				return Promise.reject("ID非法");
+			}
     }
   }
 };
