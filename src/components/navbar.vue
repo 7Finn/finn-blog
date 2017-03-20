@@ -1,13 +1,15 @@
 <template>
   <nav id="navbar" class="nav">
     <router-link to='/' class="brand">Finn</router-link>
-    <ul class="nav-right">
-      <router-link to='/' class="nav-item">主页</router-link>
-      <router-link to='/smallapps' class="nav-item">小应用</router-link>
-      <span class="" v-if="this.$store.state.isManager">
+    <ul class="nav-list">
+      <li><router-link to='/' class="nav-item">主页</router-link></li>
+      <li><router-link to='/smallapps' class="nav-item">小应用</router-link></li>
+      <li v-if="this.$store.state.isManager">
         <router-link to='/manager' class="nav-item">管理</router-link>
+      </li>
+      <li v-if="this.$store.state.isManager">
         <a @click='logout' class="nav-item nav-item-link">退出登录</a>
-      </span>
+      </li>
     </ul>
   </nav>
 </template>
@@ -51,6 +53,10 @@ export default {
   margin-bottom: 30px;
 }
 
+.nav li {
+  display: inline-block;
+}
+
 .brand {
   color: #000;
   font-size: 24px;
@@ -62,19 +68,19 @@ export default {
   vertical-align: middle
 }
 
-.nav-right {
+.nav-list {
   float: right;
   height: inherit;
 }
 
 .nav-item {
   line-height: 70px;
-  display: inline-block;
   margin: 0 10px;
 }
 
 .nav-item-link {
   cursor: pointer;
 }
+
 
 </style>
