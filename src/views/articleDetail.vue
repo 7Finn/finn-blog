@@ -9,10 +9,7 @@
       <i class="fa fa-clock-o" aria-hidden="true"></i>
       <span>加载中</span>
     </div>
-    <div class="temp-comment" v-if="!this.loading">
-      <h3><i class="fa fa-wrench" aria-hidden="true"></i>  评论区建设中...</h3>
-      <p>欢迎反馈问题~可投送邮箱879788904@qq.com</p>
-    </div>
+    <Comments></Comments>
   </div>
 </template>
 
@@ -20,6 +17,7 @@
 import ArticleDetail from '../components/articleDetail'
 import Information from '../components/information'
 import BackTop from '../components/backtop'
+import Comments from '../components/comments'
 
 export default {
   data: function() {
@@ -31,7 +29,8 @@ export default {
   components: {
     ArticleDetail,
     Information,
-    BackTop
+    BackTop,
+    Comments,
   },
   mounted: function() {
     this.loading = true;

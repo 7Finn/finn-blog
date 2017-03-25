@@ -3,7 +3,8 @@
     <div class="modal-mask" @click="hide">
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header">头部信息</slot>
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <h4 class="modal-title">登录</h4>
         </div>
         <div class="modal-content">
           <slot name="content">主体内容</slot>
@@ -47,7 +48,7 @@ export default {
 
 #modal .modal-container {
   border-radius: 2px;
-  width: 400px;
+  width: 800px;
   height: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
@@ -60,15 +61,36 @@ export default {
   top: 30%;
 }
 
+#modal .modal-title {
+  margin: 0;
+  font-size: 18px;
+}
+
 #modal .modal-header {
+  color: #333;
+  border-radius: 2px 2px 0 0;
+  background-color: #f3f3f3;
   position: absolute;
   height: 50px;
+  line-height: 50px;
   width: 100%;
-  padding: 10px;
+  padding: 0 20px;
   box-sizing: border-box;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #e5e5e5;
   top: 0;
   left: 0;
+}
+
+#modal .modal-header i {
+  color: #aaa;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 18px;
+  float: right;
+}
+
+#modal .modal-header i:hover {
+  color: #333;
 }
 
 #modal .modal-content {
@@ -85,7 +107,7 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #e5e5e5;
 }
 
 </style>

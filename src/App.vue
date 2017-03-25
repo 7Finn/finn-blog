@@ -1,6 +1,6 @@
 <template>
   <div id="outer">
-    <!-- <Modal></Modal> -->
+    <Modal></Modal>
     <Navbar></Navbar>
     <div id="container">
       <router-view class="router"></router-view>
@@ -12,14 +12,14 @@
 <script>
 import Vue from 'vue'
 import Navbar from './components/navbar'
-// import Modal from './components/modal'
+import Modal from './components/modal'
 export default {
   name: 'app',
   data () {
     return {
     }
   },
-  components: { Navbar }
+  components: { Navbar, Modal }
 }
 </script>
 

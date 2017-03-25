@@ -111,17 +111,6 @@ html, body, #editor {
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-textarea, #editor div {
-  position: absolute;
-  display: inline-block;
-  width: 50%;
-  height: 100%;
-  vertical-align: top;
-  box-sizing: border-box;
-  padding: 0 20px;
-  overflow: auto;
-}
-
 #editor .marked-mk {
   left: 0;
   border: none;
@@ -132,10 +121,25 @@ textarea, #editor div {
   font-size: 14px;
   font-family: 'Monaco', courier, monospace;
   padding: 20px;
+  position: absolute;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  vertical-align: top;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
 #editor .marked-html {
   right: 0;
+  position: absolute;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding: 0 20px;
+  overflow: auto;
 }
 
 #editor .title {
