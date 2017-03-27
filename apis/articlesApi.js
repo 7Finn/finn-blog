@@ -13,8 +13,22 @@ module.exports = function(db) {
         let articles = [];
         data.forEach(function (article, i) {
           // 过长的话根据换行符进行裁剪
-          let content = article.content;
-          if (content.length > 100) content = content.substr(0, 100) + '\n...';
+          let initContent = article.content;
+          let contentWithoutCode = initContent.replace(/\`\`\`(.|\n)*?\`\`\`/g, "```\n<Code.../>\n```\n")
+          let pattern = /\n/g;
+          let matches = pattern.exec(contentWithoutCode);
+          let end = contentWithoutCode.length;
+          while (matches != null) {
+            if (matches.index > 200) {
+              end = matches.index;
+              break;
+            }
+            matches = pattern.exec(contentWithoutCode);
+          }
+          let content = contentWithoutCode.substring(0, end);
+          if (end != contentWithoutCode.length) {
+            content += "\n\n...";
+          }
 
           articles.push({
             id: article._id,
