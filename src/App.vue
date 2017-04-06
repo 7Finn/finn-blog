@@ -5,7 +5,7 @@
     <div id="container">
       <router-view class="router"></router-view>
     </div>
-    <footer>©2017 吴其锋. All rights reserved.</footer>
+    <footer>©2017 吴其锋. All rights reserved. 备案号：<a href="http://www.miitbeian.gov.cn">粤ICP备17035147号</a></footer>
   </div>
 </template>
 
