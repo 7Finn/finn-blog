@@ -10,23 +10,23 @@
         <div class="login-box">
           <h4>游客登录</h4>
           <form class="login-form" method="post">
-            <label for="username">用户名</label>
-            <input type="text" name="username" placeholder="8-16位数字与英文组合用户名" required>
-            <label for="password">密码</label>
-            <input type="password" name="password" placeholder="密码" required>
-            <input id="login-btn" class="btn" type="button" name="login-btn" value="登录">
+            <label for="loginUsername">用户名<span class="error-message" v-if="loginUsernameError">{{ loginUsernameError }}</span></label>
+            <input type="text" name="loginUsername" placeholder="8到16位数字与英文组合用户名" v-model="loginUsername" @blur="blurHandler" required>
+            <label for="loginPassword">密码<span class="error-message" v-if="loginPasswordError">{{ loginPasswordError }}</span></label>
+            <input type="password" name="loginPassword" placeholder="密码" v-model="loginPassword" @blur="blurHandler" required>
+            <input id="login-btn" class="btn" type="button" name="login-btn" value="登录" @click="loginHandler">
           </form>
         </div>
         <div class="register-box">
           <h4>新游客注册</h4>
           <form class="login-form" method="post">
-            <label for="username">用户名(用于登录)</label>
-            <input type="text" name="username" placeholder="8-16位数字与英文组合用户名" required>
-            <label for="username">昵称(评论时显示)</label>
-            <input type="text" name="username" placeholder="8-16位，可用中文" required>
-            <label for="password">密码</label>
-            <input type="password" name="password" placeholder="密码" required>
-            <label>完成验证：<span id="cap-error" class="hide" v-if="capError">请先完成验证 ×</span></label>
+            <label for="registerUsername">用户名(用于登录)<span class="error-message" v-if="registerUsernameError">{{ registerUsernameError }}</span></label>
+            <input type="text" name="registerUsername" placeholder="8到16位数字与英文组合用户名" v-model="registerUsername" @blur="blurHandler" required>
+            <label for="registerNickname">昵称(评论时显示)<span class="error-message" v-if="registerNicknameError">{{ registerNicknameError }}</span></label>
+            <input type="text" name="registerNickname" placeholder="2到10位，可用中文" v-model="registerNickname" @blur="blurHandler" required>
+            <label for="registerPassword">密码<span class="error-message" v-if="registerPasswordError">{{ registerPasswordError }}</span></label>
+            <input type="password" name="registerPassword" placeholder="8到16位数字与英文组合" v-model="registerPassword" @blur="blurHandler" required>
+            <label>完成验证：<span id="cap-error" class="error-message" v-if="capError">请先完成验证 ×</span></label>
             <div id="captcha">
                 <p id="wait" class="show" v-if="waitCap">正在加载验证码...</p>
             </div>
@@ -39,7 +39,8 @@
 </template>
 
 <script>
-
+var validator = require('../utils/validator.js');
+var bcrypt = require('bcrypt-nodejs');
 
 export default {
   data: function() {
@@ -47,6 +48,16 @@ export default {
       waitCap: true,
       capError: false,
       captchaObj: null,
+      loginUsername: "",
+      loginUsernameError: "",
+      loginPassword: "",
+      loginPasswordError: "",
+      registerUsername: "",
+      registerUsernameError: "",
+      registerNickname: "",
+      registerNicknameError: "",
+      registerPassword: "",
+      registerPasswordError: "",
     }
   },
   methods: {
@@ -64,15 +75,78 @@ export default {
     },
     registerHandler: function(e) {
       var result = this.captchaObj.getValidate();
-      if (!result) {
-        console.log("fail");
+      if (!result) { // 检查有没有点验证
         this.capError = true,
         setTimeout(() => {
           this.capError = false;
         }, 2000);
         e.preventDefault();
       } else {
-        console.log("success");
+        // 重新检查一遍
+        this.registerUsernameError = validator.checkUsername(this.registerUsername);
+        this.registerNicknameError = validator.checkNickname(this.registerNickname);
+        this.registerPasswordError = validator.checkPassword(this.registerPassword);
+        if (!this.registerUsernameError && !this.registerNicknameError && !this.registerPasswordError) {
+          // 对密码进行处理
+          let user = {
+            username: this.registerUsername,
+            nickname: this.registerNickname,
+            password: this.registerPassword,
+          }
+          bcrypt.hash(this.registerPassword, null, null, (error, hash)=> {
+  					user.password = hash;
+            this.$http.post('/api/register', user)
+              .then(res => {
+                if (!res.body.err) {
+                  alert("注册成功");
+                  this.$router.push('/');
+                } else {
+                  this.registerUsernameError = res.body.data;
+                }
+              })
+  	      });
+
+        }
+      }
+    },
+    blurHandler: function(e) {
+      let event = e || window.event;
+      let target = e.target || e.srcElement;
+      switch(target.name) {
+        case 'loginUsername': this.loginUsernameError = validator.checkUsername(this.loginUsername); break;
+        case 'loginPassword': this.loginPasswordError = validator.checkPassword(this.loginPassword); break;
+        case 'registerUsername': this.registerUsernameError = validator.checkUsername(this.registerUsername); break;
+        case 'registerNickname': this.registerNicknameError = validator.checkNickname(this.registerNickname); break;
+        case 'registerPassword': this.registerPasswordError = validator.checkPassword(this.registerPassword); break;
+      }
+    },
+    loginHandler: function(e) {
+      // 重新检查一遍
+      this.loginUsernameError = validator.checkUsername(this.loginUsername);
+      this.loginPasswordError = validator.checkPassword(this.loginPassword);
+      if (!this.loginUsernameError && !this.loginPasswordError) {
+        // 对密码进行处理
+        let user = {
+          username: this.loginUsername,
+          // password: this.loginPassword,
+        }
+        this.$http.post('/api/login', user)
+          .then(res => {
+            if (!res.body.err) {
+              // 获取加密的密码
+              bcrypt.compare(this.loginPassword, null, (err, res)=> {
+                user.password = hash;
+
+              });
+            } else {
+              if (res.body.data.err == "用户不存在") {
+                this.loginUsernameError = res.body.data.err;
+              } else if (res.body.data.err == "密码错误") {
+                this.loginPasswordError = res.body.data.err;
+              }
+            }
+          })
+
       }
     }
   },
@@ -107,7 +181,7 @@ export default {
   margin-bottom: 10px;
 }
 
-#cap-error {
+#modal .error-message {
   color: #a94442;
   float: right;
 }
@@ -138,7 +212,7 @@ export default {
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  top: 20%;
+  top: 10%;
 }
 
 #modal .modal-title {
@@ -166,6 +240,7 @@ export default {
   background-color: #5cb85c;
   border-color: #4cae4c;
   color: #fff;
+  box-shadow: none;
 }
 
 #modal .btn:active {
@@ -211,16 +286,16 @@ export default {
   box-sizing: border-box;
   float: left;
   width: 50%;
-  height: 400px;
+  max-height: 400px;
   padding: 0 5%;
-  border-right: 1px solid #ccc;
 }
 
 #modal .register-box {
+  border-left: 1px solid #ccc;
   box-sizing: border-box;
   float: right;
   width: 50%;
-  height: 400px;
+  max-height: 400px;
   padding: 0 5%;
 }
 

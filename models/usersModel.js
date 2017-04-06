@@ -13,39 +13,20 @@ module.exports = function(db) {
 			return new Promise(function(resolve, reject) {
 				users.findOne({username: username}, function(err, doc) {
 	      	if (doc == null) {
-	      		reject({
-							err: "用户不存在",
-							user: null,
-						});
+	      		reject("用户不存在");
 	      	} else {
-	      		bcrypt.compare(password, doc.password, function(err, res) {
-	      			if (res) { // 账号密码正确
-								resolve({ err: null, user: doc });
-							} else { // 密码错误
-								reject({ err: "密码错误", user: null });
-							}
-	      		});
+	      		resolve(doc);
 	      	}
 				});
 			});
     },
 
-		// 参数:
-		// user: 用户对象 { username, password, repassword }
 		// 返回值:
 		// Promise
     addUser: function(user) {
-			return new Promise(function(resolve, reject) {
-				bcrypt.hash(user.password, null, null, function(error, hash) {
-					let u = {
-						username: user.username,
-						password: hash,
-						manager: false
-					}
-	        users.insert(u);
-					resolve(true);
-	      });
-			});
+			console.log(user);
+			users.insert(user);
+			return Promise.resolve(true);
     },
 
 		// 参数:
@@ -64,6 +45,14 @@ module.exports = function(db) {
 					}
 				});
 			});
-		}
+		},
+
+		checkUser: function(user) {
+			return users.findOne({username:user.username})
+				.then(function(existedUser) {
+					console.log('Exist: ', existedUser);
+					return existedUser ? Promise.reject("用户已存在") : Promise.resolve(user);
+				});
+    },
   }
 };

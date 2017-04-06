@@ -16,10 +16,20 @@ module.exports = function(db) {
     }
   });
 
+  // router.post('/hash', function(req, res, next) {
+  //   userModel.findUser(req.body.username)
+  //     .then(data => {
+  //       res.jsonSend(data);
+  //     })
+  //     .catch(err => {
+  //       res.jsonError(err);
+  //     })
+  // });
+
   router.post('/login', function(req, res, next) {
     userModel.findUser(req.body.username, req.body.password)
       .then(data => {
-        req.session.user = data.user;
+        req.session.user = data;
         res.jsonSend(data);
       })
       .catch(err => {
@@ -28,13 +38,16 @@ module.exports = function(db) {
   });
 
   router.post('/register', function(req, res, next) {
-    var user = req.body;
-    userModel.addUser(user)
-      .then(data => {
-        if (data) res.jsonSend(true);
+    let user = req.body;
+    userModel.checkUser(user)
+      .then(userModel.addUser)
+      .then(function() {
+        req.session.user = user;
+        res.jsonSend("注册成功");
       })
-      .catch(err => {
-        res.jsonError(err);
+      .catch(function(error){
+        console.log("Regist Error:" + error);
+        res.jsonError(error);
       });
   });
 
