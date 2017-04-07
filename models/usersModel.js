@@ -15,7 +15,13 @@ module.exports = function(db) {
 	      	if (doc == null) {
 	      		reject("用户不存在");
 	      	} else {
-	      		resolve(doc);
+						bcrypt.compare(password, doc.password, function(err, res) {
+	      			if (res) { // 账号密码正确
+								resolve(doc);
+							} else { // 密码错误
+								reject("密码错误");
+							}
+	      		});
 	      	}
 				});
 			});
@@ -24,9 +30,18 @@ module.exports = function(db) {
 		// 返回值:
 		// Promise
     addUser: function(user) {
-			console.log(user);
-			users.insert(user);
-			return Promise.resolve(true);
+			return new Promise(function(resolve, reject) {
+				bcrypt.hash(user.password, null, null, function(error, hash) {
+					let u = {
+						username: user.username,
+						nickname: user.nickname,
+						password: hash,
+						manager: false
+					}
+	        users.insert(u);
+					resolve(true);
+	      });
+			});
     },
 
 		// 参数:

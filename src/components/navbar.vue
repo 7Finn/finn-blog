@@ -22,9 +22,9 @@ export default {
     }
   },
   beforeCreate: function() {
-    this.$http.get('/api/user')
+    this.$http.get('/api/manager')
       .then(res => {  // success
-        if(res.body.data.username) {
+        if(!res.body.err) {
           // 这里直接就判断管理员了，因为只有一个账号（笑）
           this.$store.state.isManager = true;
         } else {

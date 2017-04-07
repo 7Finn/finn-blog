@@ -40,7 +40,7 @@
 
 <script>
 var validator = require('../utils/validator.js');
-var bcrypt = require('bcrypt-nodejs');
+const crypto = require('crypto');
 
 export default {
   data: function() {
@@ -93,19 +93,21 @@ export default {
             nickname: this.registerNickname,
             password: this.registerPassword,
           }
-          bcrypt.hash(this.registerPassword, null, null, (error, hash)=> {
-  					user.password = hash;
-            this.$http.post('/api/register', user)
-              .then(res => {
-                if (!res.body.err) {
-                  alert("注册成功");
-                  this.$router.push('/');
-                } else {
-                  this.registerUsernameError = res.body.data;
-                }
-              })
-  	      });
+          // 对密码进行加密处理
+          var hash = crypto.createHash('sha256');
+          hash.update(user.password);
+          user.password = hash.digest('hex');
 
+          this.$http.post('/api/register', user)
+            .then(res => {
+              if (!res.body.err) {
+                alert("注册成功");
+                // this.$router.push('/');
+                this.hide(); // 隐藏模态窗
+              } else {
+                this.registerUsernameError = res.body.data;
+              }
+            })
         }
       }
     },
@@ -128,21 +130,25 @@ export default {
         // 对密码进行处理
         let user = {
           username: this.loginUsername,
-          // password: this.loginPassword,
+          password: this.loginPassword,
         }
+        // 对密码进行加密处理
+        var hash = crypto.createHash('sha256');
+        hash.update(user.password);
+        user.password = hash.digest('hex');
+        console.log(user.password);
+
         this.$http.post('/api/login', user)
           .then(res => {
             if (!res.body.err) {
-              // 获取加密的密码
-              bcrypt.compare(this.loginPassword, null, (err, res)=> {
-                user.password = hash;
-
-              });
+              console.log("登录成功");
+              this.$store.state.user = res.body.data;
+              this.hide(); // 隐藏模态窗
             } else {
-              if (res.body.data.err == "用户不存在") {
-                this.loginUsernameError = res.body.data.err;
-              } else if (res.body.data.err == "密码错误") {
-                this.loginPasswordError = res.body.data.err;
+              if (res.body.data == "用户不存在") {
+                this.loginUsernameError = res.body.data;
+              } else if (res.body.data == "密码错误") {
+                this.loginPasswordError = res.body.data;
               }
             }
           })

@@ -4,27 +4,19 @@ var router = express.Router();
 module.exports = function(db) {
   var userModel = require('../models/usersModel')(db);
 
-  router.get('/user', function(req, res) {
+  router.get('/manager', function(req, res) {
     if (req.session.user) {
-        res.jsonSend({
-            username : req.session.user.username
+      userModel.isManager(req.session.user.username)
+        .then(data => {
+          res.jsonSend(true);
+        })
+        .catch(err => {
+          res.jsonError(false);
         })
     } else {
-        res.jsonSend({
-            username : null
-        })
+        res.jsonError(false);
     }
   });
-
-  // router.post('/hash', function(req, res, next) {
-  //   userModel.findUser(req.body.username)
-  //     .then(data => {
-  //       res.jsonSend(data);
-  //     })
-  //     .catch(err => {
-  //       res.jsonError(err);
-  //     })
-  // });
 
   router.post('/login', function(req, res, next) {
     userModel.findUser(req.body.username, req.body.password)
