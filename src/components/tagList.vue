@@ -41,7 +41,7 @@ export default {
   border-radius: 2px;
   background-color: #fff;
   box-shadow: 1px 1px 1px #ddd;
-  border-left: 5px solid #77c2ff;
+  border-left: 5px solid #56bf9c;
   padding: 10px;
 }
 

@@ -30,8 +30,18 @@ export default {
     Information,
     TagList
   },
+  watch: {
+    $route: function() {
+      this.getArticleByCategory();
+    }
+  },
   mounted: function() {
     if (this.$store.state.categoryArticles.length == 0) {
+      this.getArticleByCategory();
+    }
+  },
+  methods: {
+    getArticleByCategory: function() {
       this.$http.get('/api/article/category?name=' + this.$route.params['name'])
         .then(res => { //success
           if (!res.body.err) {

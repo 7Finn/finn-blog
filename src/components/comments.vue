@@ -77,7 +77,8 @@ export default {
                 comment: data.comment,
                 avatarSrc: require('../assets/avatar/' + this.$store.state.user.nickname.charCodeAt(this.$store.state.user.nickname.length - 1)%10 + '.svg')
               }
-              this.commentsArray.push(c)
+              this.commentsArray.push(c);
+              this.textValue = ""; // 清空文本框
             } else {
               console.log(res.body.data);
             }

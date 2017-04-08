@@ -35,17 +35,6 @@ export default {
     toTag: function(event) {
       let category = event.target.innerHTML.trim();
       this.$router.push('/category/' + category);
-      this.$http.get('/api/article/category?name=' + category)
-        .then(res => { //success
-          if (!res.body.err) {
-            this.$store.state.categoryArticles = res.body.data;
-          } else {
-            this.$router.replace('/404');
-          }
-        }, res=> { //fail
-          console.log("错误返回");
-          this.$router.replace('/404');
-        });
     }
   }
 
