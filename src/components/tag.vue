@@ -1,5 +1,5 @@
 <template>
-  <li @click="setCategory"><router-link v-bind:to="url"> {{ tag.name }}({{ tag.articlesId.length }})</router-link></li>
+  <li><a @click="setCategory">{{ tag.name }}({{ tag.articlesId.length }})</a></li>
 </template>
 
 
@@ -9,17 +9,13 @@ export default {
   data: function() {
     return {}
   },
-  computed: {
-    url: function() {
-      return '/category/' + this.tag.name;
-    }
-  },
   methods: {
     setCategory: function() {
       this.$http.get('/api/article/category?name=' + this.tag.name)
         .then(res => { //success
           if (!res.body.err) {
             this.$store.state.categoryArticles = res.body.data;
+            this.$router.replace('/category/' + this.tag.name);
           } else {
             this.$router.replace('/404');
           }

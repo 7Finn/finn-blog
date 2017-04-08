@@ -49,10 +49,12 @@ module.exports = function(db) {
 
   var usersApi = require('./apis/usersApi')(db);
   var articlesApi = require('./apis/articlesApi')(db);
+  var commentsApi = require('./apis/commentsApi')(db);
   var geetestApi = require('./apis/geetestApi')();
   app.use(JsonUtil());
   app.use('/api', usersApi);
   app.use('/api/article', articlesApi);
+  app.use('/api/comment', commentsApi);
   app.use('/api/geetest', geetestApi);
 
 

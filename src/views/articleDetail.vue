@@ -9,7 +9,7 @@
       <i class="fa fa-clock-o" aria-hidden="true"></i>
       <span>加载中</span>
     </div>
-    <Comments></Comments>
+    <Comments v-bind:aid="this.$route.params['id']" v-bind:comments="comments"></Comments>
   </div>
 </template>
 
@@ -31,6 +31,16 @@ export default {
     Information,
     BackTop,
     Comments,
+  },
+  computed: {
+    comments: function() {
+      if (this.article && this.article.comments) {
+        this.article.comments.forEach(function(item, index, array) {
+          item.avatarSrc =  require('../assets/avatar/' + item.nickname.charCodeAt(item.nickname.length - 1)%10 + '.svg');
+        });
+        return this.article.comments;
+      } else return [];
+    }
   },
   mounted: function() {
     this.loading = true;

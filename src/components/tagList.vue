@@ -37,10 +37,11 @@ export default {
 
 <style>
 .tag-list {
-  width: 160px;
+  width: 155px;
   border-radius: 2px;
   background-color: #fff;
   box-shadow: 1px 1px 1px #ddd;
+  border-left: 5px solid #77c2ff;
   padding: 10px;
 }
 

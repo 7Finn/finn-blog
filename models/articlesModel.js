@@ -39,6 +39,15 @@ module.exports = function(db) {
 			} else {
 				return Promise.reject("ID非法");
 			}
-    }
+    },
+		addComment: function(aid, user, comment) {
+			if (ObjectID.isValid(aid)) {
+				if (!user || !comment) return Promise.reject("请求非法");
+				return articles.updateOne({_id: ObjectID(aid)}, {$push: {comments: {username: user.username, nickname: user.nickname, comment: comment, date: new Date()}}});
+			} else {
+				return Promise.reject("文章ID非法");
+			}
+
+		},
   }
 };

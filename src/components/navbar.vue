@@ -28,7 +28,7 @@ export default {
           // 这里直接就判断管理员了，因为只有一个账号（笑）
           this.$store.state.isManager = true;
         } else {
-          // this.$router.push('/');
+          this.$store.state.isManager = false;
         }
       });
   },

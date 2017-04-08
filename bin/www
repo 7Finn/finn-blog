@@ -16,7 +16,7 @@ var mongoUrl = 'mongodb://localhost:27017/blog';
 mongoClient.connect(mongoUrl).catch(function(error){
   debug("Connect to mongodb " + mongoUrl + " was failed with error: ", error);
 }).then(function(db) {
-  console.log("连接数据库成功");
+  console.log("Connect to mongodb...");
 
   var app = require('../app')(db);
   /**

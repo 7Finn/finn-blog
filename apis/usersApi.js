@@ -18,6 +18,14 @@ module.exports = function(db) {
     }
   });
 
+  router.get('/user', function(req, res) {
+    if (req.session.user) {
+      res.jsonSend(req.session.user);
+    } else {
+      res.jsonError(false);
+    }
+  });
+
   router.post('/login', function(req, res, next) {
     userModel.findUser(req.body.username, req.body.password)
       .then(data => {
