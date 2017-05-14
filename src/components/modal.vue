@@ -104,11 +104,9 @@ export default {
                 alert("注册成功");
                 this.$http.post('/api/login', user)
                   .then(res => {
-                    console.log("登录成功");
                     this.$store.state.user = res.body.data;
                   })
                   .catch(err => {
-                    console.log("登录失败");
                     this.$store.state.user = null;
                   })
                 this.hide(); // 隐藏模态窗
@@ -149,7 +147,6 @@ export default {
         this.$http.post('/api/login', user)
           .then(res => {
             if (!res.body.err) {
-              console.log("登录成功");
               this.$store.state.user = res.body.data;
               this.hide(); // 隐藏模态窗
             } else {

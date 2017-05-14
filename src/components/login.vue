@@ -81,7 +81,7 @@ export default {
 
       this.$http.post('/api/login', data)
         .then(res => {  // success
-          if(res.body.data.user) {
+          if(!res.body.err) {
             this.$store.state.isManager = true;
             this.$router.push('/');
           } else {
